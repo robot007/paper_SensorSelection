@@ -1,0 +1,130 @@
+\documentclass[11pt]{usuthesis}
+\usepackage{graphicx}
+%\usepackage[draft]{graphicx}
+
+\usepackage{alltt,makeidx,ifthen,fancyvrb,listings}
+\usepackage{hyperref,overpic,lscape}
+\usepackage[below]{placeins}
+\usepackage{subfigure,color}
+\usepackage{layout,afterpage,longtable}
+\usepackage{amsfonts,eucal,amssymb}
+\usepackage{amsmath}
+\usepackage{flafter}
+\usepackage{url}
+\usepackage{afterpage} % to clear floating objects
+%\usepackage{algorithm}
+\usepackage{algorithm2e}
+% use ImageMagrick
+%\DeclareGraphicsRule{.jpg}{eps}{.bb}{`convert #1 eps:-}%
+\renewcommand{\baselinestretch}{1}
+\urlstyle{rm}
+
+\makeatletter
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% User specified LaTeX commands.
+% \newcounter{problem}
+% \newcommand{\prob}{ \addtocounter{problem}{1}  {\bf Problem \arabic{problem}}:\  }
+\newcommand{\uc}{~Uci\'{n}ski}
+\newcommand{\dt}{\hbox{d}t}
+\newcommand{\fwA}{\textwidth} % one column
+\newcommand{\fwB}{0.8\textwidth} % one column
+\newcommand{\fwC}{0.5\textwidth}
+
+
+%%%%%%%%%%%%%%%% zsong's macros
+\newtheorem{thm}{Theorem}[section]
+\newtheorem{cor}[thm]{Corollary}
+\newtheorem{lem}[thm]{Lemma}
+\newtheorem{mdef}[thm]{Definition}
+\newenvironment{proof}[1][Proof]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}]}{\end{trivlist}}
+\newcommand{\qed}{\nobreak \ifvmode \relax \else
+      \ifdim\lastskip<1.5em \hskip-\lastskip
+      \hskip1.5em plus0em minus0.5em \fi \nobreak
+      \vrule height0.75em width0.5em depth0.25em\fi}
+
+\newenvironment{definition}[1][Definition]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}]}{\end{trivlist}}
+\newenvironment{example}[1][Example]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}]}{\end{trivlist}}
+\newenvironment{remark}[1][Remark]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}]}{\end{trivlist}}
+
+%% for floating object
+%\renewcommand{\topfraction}{.85}
+%\renewcommand{\bottomfraction}{.7}
+%\renewcommand{\textfraction}{.35}
+\renewcommand{\floatpagefraction}{.7}
+
+%\renewcommand{\topfraction}{.85}
+%\renewcommand{\bottomfraction}{.7}
+%\renewcommand{\textfraction}{.15}
+%\renewcommand{\floatpagefraction}{.66}
+%\renewcommand{\dbltopfraction}{.66}
+%\renewcommand{\dblfloatpagefraction}{.66}
+%\setcounter{topnumber}{9}
+%\setcounter{bottomnumber}{9}
+%\setcounter{totalnumber}{20}
+%\setcounter{dbltopnumber}{9}
+
+%%%%%%%%%%%%%%%% end of zsong's macros
+
+
+\makeatother
+
+\author{Zhen Song}
+\title{Observation Problems Involving Wireless Sensor Networks (draft 7)}
+
+\departmentname{Electrical and Computer Engineering}
+\degreein{Electrical Engineering}
+\firstreader{Dr. Brandon Eames}
+\secondreader{Dr. Jake Gunther}
+\thirdreader{Dr. Wei Ren}
+\forthreader{Dr. Vlademir Kulyukin}
+\graddean{Dr. Thomas Kent}
+\deantitle{Dean of Graduate Studies}
+\majorprof{Dr. YangQuan Chen}
+\dissertation{Dissertation}
+\degree{Doctor of Philosophy}
+\degreenotallcaps{Doctor of Philosophy}
+\date{\today}
+\year{2007}
+\makeindex
+
+
+
+\begin{document}
+\maketitle
+\input{dedication}
+\input{abstract}
+\input{acknowledgement}
+
+\tableofcontents
+\listoftables
+\listoffigures
+\body
+
+
+
+\input{Intro}
+\input{OptTraj}
+\input{SensorSelection}
+\input{LocOpt}
+%% \input{ReliabilityTest}
+\input{Conclusion}
+
+\bibliographystyle{USU}
+\bibliography{../Bib/0506EPaperCollection}
+
+\newpage
+\chapter*{
+\begin{center}
+    \vspace{10cm}
+    {\Large {Appendices}}
+\end{center} }
+\addcontentsline{toc}{chapter}{Appendices}
+\clearpage
+\appendix
+\input{Appendix}
+
+\gettotalpages
+\end{document}

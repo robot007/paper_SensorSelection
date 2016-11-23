@@ -1,0 +1,522 @@
+\chapter{Design and Optimize Localization Systems for Wireless Sensor Networks}\label{s:loc}% : 19 pages
+\section{The Motivation and the Problem}
+Localization is a fundamental function of WSNs. Many higher-level functions, such as routing~\cite{AkyildizWMeshNetworkSurvey}, either depend on localization or work better if the sensors' positions are available. Because of its importance, WSN localization has been discussed intensively. For example, a decentralized WSN localization system based on signal strength of Radio Frequency (RF) signals is proposed, namely MoteTrack~\cite{WelshMoteTrack_LoCA2005-PUC}. In~\cite{PariyanthaCricketBoardPhd}, a Time-Of-Flight (TOF) based acoustic localization system called Cricket Board is presented. Currently, in the de facto WSN hardware standard, IEEE 802.15.4, localization is not specified~\cite{Standard802.15.4.2003}, and the widely used CC2420 chip~\cite{CC2420DataSheet} only supports Received Signal Strength Indicator (RSSI) and Link Quality Indicator (LQI) as the measurements of distances. Some researchers propose algorithms to locate sensor nodes with the current IEEE 802.15.4 standard~\cite{WelshMoteTrack_LoCA2005-PUC,NiculescuPositioning_survey}. However, RSSI and LQI are proved to be unreliable as the distance indicators, especially for indoor environments~\cite{LymberopoulosEmpiricalAna,Polastre-telos}.
+
+
+\section{Localization Hardware}
+% \subsection{Review on Different Approaches}
+\subsection{RSSI}
+ This approach takes the RSSI of RF signals as the indicator of distance. This method is featured with virtually no additional hardware costs and little demands on energy. However, the method is also not precise.
+  Comparing to acoustic TOF-based methods, the resolution of the RF RSSI-based methods is very limited. While the acoustic methods have centimeter level precision, the resolution for RSSI-based methods may be about several meters~\cite{WelshMoteTrack_LoCA2005-PUC}.
+    Due to multi-path fading effects of RF signals, there is no direct relationship between RSSI and the distance between transmitter and receiver~\cite{Polastre-telos}, especially for in door environments~\cite{WelshMoteTrack_LoCA2005-PUC}. In addition, our experiments reveal that the RF signals also have  strong time varyings~\cite{GungorICC07}. This is yet another challenge for RSSI-based localization systems.
+     To our best knowledge, no state-of-art RSSI-based method supports a resolution under 2 meters, which may not be ideal for many applications. In addition, based on our experiments, non-trivial tunings are required by RSSI-based systems.
+ % Based on our experiments, the most optimistic expectation of the localization precision based on this method is around 3 meters.
+
+\subsection{AOA}
+ Methods based on angle of arrival (AOA)~\cite{NiculescuAPSAoAInfocom03,liu02collaborative} are also used for sensor node or target positioning. Acoustic AOA measurement~\cite{liu02collaborative} is easier than RF AOA, since the latter method may require high-speed signal processing. Although AOA has been discussed in theory~\cite{NiculescuAPSAoAInfocom03}, it is not a common localization method for low cost sensor nodes, probably due to its hardware costs.
+
+
+\subsection{Acoustic TOF}
+ This method measures TOF of acoustic signals, such as sonar signals~\cite{PariyanthaCricketBoardPhd}. This method may provide centimeter level precision. Comparing to RF TOF method, the measure on acoustic TOF is much easier, since the speed of sound is much less than that of the RF signals. However, RF signals have several advantages over the acoustic approaches.
+ \begin{itemize}
+   \item The speed of sound wave is not as stable as that of the RF signals. The speed sound wave is affected by the temperature and humility of the environments. Thus, the measurement on TOF of RF signals, although may be more difficult, could be more precise. For example, it is reported that sub-millimeter level precision can be achieved by RF TOF measurements~\cite{McEwanPen}.
+   \item Ultrasonic sound wave is directional. The orientation of the acoustic device may affect the positioning results~\cite{PariyanthaCricketBoardPhd}. Lower frequency sound, although is omni-directional, can be heard by ears, thus may not be desirable. Since the RF signal can be emitted omni-directionally with proper antenna, the placement of RF TOF-based sensors are less restrictive~\cite{dutta06radar}.
+   \item RF devices may be more energy efficient than the acoustic counterpart. A RF TOF device may require power of micro-watt level~\cite{MIR}, while milli-watt level power may be required by sonar devices~\cite{PariyanthaCricketBoardPhd}.
+ \end{itemize}
+
+
+\subsection{RF TOF Measurement}
+ This method could be both accurate and energy efficient, however, it is also very challenging. We need a low-cost clock with very high precision. Currently, there are several solutions within this domain. The difference and relationship between our proposed method and existing methods will be discussed soon.
+
+ Because light travels at a speed of $3\times10^8$ m/s, we need a device equivalent to a counter running at 300 MHz, in order to get sub-meter level distance measurements. Although counters with such a speed are common at these days, they are too costly for WSN applications.
+  Since typical clock speed of the processor on a sensor node is about 8 MHz to 16 MHz, it is obvious that the TOF can not be directly measured by the processors and a special hardware for TOF measurement is required. Several hardware implementation methods are listed below:
+
+ \begin{enumerate}
+    \item Application Specific Integrated Circuit (ASIC): Several ASIC chips with RF TOF measurement capability have been developed~\cite{CC2420DataSheet,LymberopoulosEmpiricalAna}. Using modern technologies, we can even directly make counters running at 300MHz on the chip, and hence the TOF can be measured through brute force approaches. However, the development costs of even simple ASIC chips are very high. Although the cost per chip is the lowest among compared with other TOF solutions, the high initial development cost made this method unsuitable for many applications.
+    \item Field Programmable Gate Array (FPGA): In short, FPGA is a lower-cost replacement for ASIC. In~\cite{LaserRangeFinderUsingActelFPGA}, a FPGA along with a 100 Mhz physical clock is proposed to achieve a resolution that approaches to 4 Ghz clock. The speedup factor (4Ghz/100Mhz) is 40. The system is specially designed for FPGA and no processor is required. The TOF measure system in~\cite[pp79]{tufan_phd_thesis} has stand alone communication system and is targeted for ASIC implementations, similar to the solution presented in~\cite{Fontana2002}.
+    \item Discrete components: There are several systems that measure TOF using commercial-out-of-shelf electronic components. For example, McEwan developed several TOF measurement devices using UWB (ultra-wide band) radios, such as the system in~\cite{McEwanShortRangeLoc}. In order to increase signal to noise ratio (SNR) and enable low-cost TOF measurement, the UWB transmitter in~\cite{McEwanShortRangeLoc} sends thousands of impulses to get one distance measurement.
+\end{enumerate}
+
+The document of the next generation WSN protocol, IEEE 802.15.4a, indicates that new RF hardware which measures the TOF of RF signals may be used to improve the localization significantly~\cite{TG4AReport}.
+  Actually, the candidate technologies, UWB (Ultra Wide Band)~\cite{PahlavanIndoorGeolocation} and Chirp-based localization~\cite{AetherPatent6795491}, such as CSS~\cite{15-03-0460-00-0040-IEEE-802-CSS-Tutorial-part1} (Chirp Spread Spectrum), are not totally new and have been studies for ten years or more. Technically, both approaches have the TOF location as well as the communication capabilities and both of them have commercial products. The UWB was chosen by IEEE 802.15.4a as the location method, and both of the UWB and the CSS methods will be used for communication. %The discussions on the comparisons of UWB and CSS are out of the scope of this article.
+    From the aspect of localization, both of the two provide narrow peaks as the indicators of the TOA of the RF signals. Each echo from the multi-path effect contributes a peak after the LOS (Line Of Sight) signal peak is received. TDOA (Time Difference Of Arrival) can be precisely estimated. In short, both of the methods use TOF as the indicator of the distance.
+
+%\subsubsection{ASIC}
+%\subsubsection{FPGA}
+%\subsubsection{Discrete Component}
+\section{The Proposed Phase-based Localization Method}% 5 pages
+\subsection{Review on TDOA Localization Algorithms}
+Comparisons with the current solutions: TOF Method
+Fig.~\ref{f:twr} and Fig.~\ref{f:tdoaowr} are from a technical proposal~\cite{aetherwireProp} of the IEEE 802.15.4a standard group. The two way ranging (TWR) method in Fig.~\ref{f:twr} is also called RTT in other references~\cite{PawariLocatingTheNodes05}. It is very intuitive: node A sends a message to the node B, and the node B acknowledge the message. In the acknowledgement, node B includes it reply time, $T_{Reply}$. Thus, after measuring the time between sending the message and receiving the acknowledgement, node A subtracts the $T_{Reply}$ and the TOF can be easily computed. That is $$T_{OF}=\frac{T_1-T_0-T_{Reply}}{2},$$
+where $T_OF$ is the TOF.
+
+\begin{figure}
+  \centering
+  \includegraphics[width=\fwC]{img/TWR}\\
+  \caption{Two way ranging method~\cite{aetherwireProp}.}\label{f:twr}
+\end{figure}
+
+\begin{figure}
+  \centering
+  \includegraphics[width=\fwB]{img/TdoaOwr}\\
+  \caption{One way ranging method~\cite{aetherwireProp}.}\label{f:tdoaowr}
+\end{figure}
+
+
+The acknowledgement from the node B is undesirable due to the following reasons:
+\begin{itemize}
+\item It is likely that the number of mobile nodes, $m$, is much more than the number of the beacons, $n$. Assuming pear-to-pear communication is available, this RTT measurement requires at least $m+n$ messages in total, for each mobile node to get its position. That is, beacons broadcast first, which requires $n$ message packets. Then, the mobile nodes reply and $m$ packets are sent. Thus, $n-1$ packets are required for one ``sink beacon'' to collect the range information from rest $n-1$ beacons. This sink beacon has the capability to locate each mobile node. To broadcast the positions to each beacon, at least one more packet is required. Thus, at least $m+2n$ packets are required, in total. If there are many mobile nodes, their positions cannot be encapsulated in one packet and broadcast from the sink beacon, hence more than $m+2n$ packets are required. This is a centralized method with the sink beacon takes all the computation.
+\item  If the information flow is in the other direction. Mobile nodes broadcast to beacons and wait for the reply from the beacons, then at least $2m$ packets are required. This is a distributed method that the computation is uniformly distributed to each mobile node.
+\item  For both the centralized and distributed method, the required number of communication packets is large if the number of mobile notes is big enough. The high demands of the RTT method on the communication also imply high demands on the energy.
+\item  In practice, including $T_{Reply}$ in the acknowledgement message may not be a precise method. From Fig.~\ref{f:twr}, the measurement of $T_{Reply}$ requires the nanosecond-level time stamps when the acknowledgment is sent from node B. Thus, when node B is preparing the acknowledgement package, only the prediction, instead of the measurement, of $T_{Reply}$ is available. Since in the time that a sensor node executes one command, the light may transfer hundreds of meters, $T_{Reply}$ is hard to predict precisely to support cm level location accuracy. In the worst case, another acknowledgement should be sent from the mobile node in order to report the accurate measurement on the $T_{Reply}$. The bandwidth and energy is further sacrificed. % In short, without special hardware, the TWR method is not easy to implement, because controlling and measuring $T_{Reply}$ is hard for micro-controllers.
+% \item  The RTT measurement may also sensitive to multi-path effects. The explanations are plotted in Fig 6. For the centralized method, when the mobile nodes are close to each other, the time when they received the message from the beacon is very close. So does the time when their acknowledgements arrive at the beacon. The echoes due to the multi-path could have a longer delay compare to the time difference between the mobile nodes. Thus, in the bottom of Figure 6, it is shown that the LOS acknowledgement packages from the two can not be distinguished easily. In brief, when the mobile nodes are very close, with respect to the multi-path delays, the RTT method is hard to implement.
+\end{itemize}
+
+Another existing method is called one way ranging (OWR) method~\cite{Oppermann2004} which is also implemented in a commercial UWB localization system~\cite{FontanaUWB04}. The method is a TDOA (time difference of arrival) algorithm. From Fig.~\ref{f:tdoaowr}, it is seen that the only message is sent from the mobile node. The beacons (the anchor nodes in the figure) only listen to the mobile node. Thus, if the time intervals between the time when mobile nodes send the messages are large enough, the system is immune to the multi-path effects. However, the OWR requires the beacons to be synchronous. The nanosecond-level time synchronization is not trivial, especially if the synchronization signals are transmitted via lossy wireless channels. Note that the anchor nodes in~\cite{FontanaUWB04} are connected by communication cables.
+ In addition, the message flow from the mobile node still exists, which indicates that the energy and bandwidth cost of the OWR is about the same as that of the RTT and the localization is centralized. There is no significant improvement of the OWR over the RTT.
+
+Following the conventions in RTT analysis, the OWR method requires at least $m+n+k$ packets for each mobile node to get its position, where $k$ is the number packets that required for beacon synchronization. The number of packets is computed as the followings:
+
+\begin{itemize}
+\item   Firstly, the $m$ mobile nodes broadcast $m$ packets.
+\item   Secondly, $n-1$ beacons send $n-1$ packets to a sink beacon, which then has full knowledge on the range information.
+\item   Thirdly, the sink beacon computes the positions of the mobile nodes and broadcast the information to the mobile nodes. At least one more packet is required.
+\item   In total, we have $m+(n-1)+1$ packets, which equals to $m+n$.
+\end{itemize}
+
+Note that the OWR method is a centralized method.
+If the information flow of OWR is in the reverse direction, i.e., from beacons to the mobile nodes, the system is more suitable for WSNs, which has a large number of mobile nodes. 
+
+
+\subsection{Problem Formulation}
+\subsubsection{Design Considerations}
+It is desirable if a RF TOF-based localization system for WSNs has the following features:
+\begin{itemize}
+\item Distributed: The positions of each sensor node should be computed by the sensor nodes themselves, thus the burden on the communication and central computing unit is relaxed.
+\item Asynchronous: The TOF of RF signals are too small that the requirements on the precision on synchronization is very high, which may not be possible without wired connections or atomic clocks. In order to reduce the hardware costs, asynchronous localization systems are highly desirable.
+\item Energy efficient and hardware costs: The desirable system should be less expensive in both energy and hardware costs.
+\end{itemize}
+
+
+%There are two major reasons to propose the phase-based localization method: 1) Reduce the costs for communication bandwidth and energy; 2) Easy implementation for high precision TDOA.
+
+%We also discuss some design issues of the phase-based localization method, i.e. optimize the positions for the beacons. The motivation for this study is the following: (1) Beacon position optimization is a low-cost method for further improves the localization precision; (2) This study may improve generic TDOA localization systems, not only to the phase-based TDOA method. Thus, the impact is boarder.
+%In this article, we will prove that the positions of the beacon affect the localization precision, which is also intuitive. Our proposed beacon position optimization method in this article is actually applicable to generic TDOA methods. Thus, this optimization method is relatively independent from the phase-based localization. We discuss the optimization in this article because it should be part of a practical phase-base TDOA localization system.
+%Before presenting the details on how does the proposed phase-based localization method satisfy our motivations, let us start from some background knowledge.
+
+\subsubsection{Phase of Arrival}
+We introduce the term Phase Of Arrival (POA) to represent a measurement that close to the TOA (Time Of Arrival), but not identical. The POA is motivated due to engineering considerations. Cost wise, the measurement on POA should be lower than the TOA. In addition, if a communication packet is lost, it is easy to handle the case in POA systems. The transmitter can simply retransmit the packet after one or more periods of the phase signal. The details are presented later in this chapter.
+% In addition, high-precision asynchronous  TDOA network can be implemented by POA, in a relatively easy method. An asynchronous TDOA system is easier to implement than a synchronized TODA system.
+
+Assuming there is a ``wrap up'' counter, as the lower plot in Fig.~\ref{f:phase}. In the figure, the horizontal axis is the time, while the vertical axis is the phase. The phase signal is in a saw shape.
+\begin{figure}
+  \centering
+  \includegraphics[width=\fwC]{img/Phase}\\
+  \caption{Phase detection.}\label{f:phase}
+\end{figure}
+    The value of the counter starts from 0, increases by 1 at every time tick, arrives the maximum value, $n_P$, and start over from 0 again. For hardware implementation purposes, it is desirable if $n_P +1$ is the power of 2. The upper plot of Fig.~\ref{f:phase} shows that a signal arrives at certain time instance. The counter values at that time is called phase. The phase in this chapter is an integer within $[0, n_P]$. The cycling period of the counter is called the period of the reference signal, $t_R$. Accordingly, there exists the frequency, $f$, and wavelength, $\lambda$, of the reference signal.
+        The reason why the integer phase is introduced is due to the easiness of hardware implementation.
+        % For example, reference~\cite{LaserRangeFinderUsingActelFPGA} includes a design on a FPGA-based high speed phase detection circuit. Note that the system works on relatively low clock, 100 MHz, but has a relatively high resolution, 750 ps, or 0.2 m positioning error. Such a high-speed counter is pure digital and should be affordable to many WSN applications.
+
+The POA measurement is close to that of the TOA. However, POA measurement requires a high-speed counter with fewer bits, which reduces the hardware costs. In cases when beacon packets are lost, the POA method retransmits the message packet after $t_R$.
+%For easier understanding, refer to Figure 4, where Tof and TReply are measured. For TOA method, the counters must have enough bits such that:
+%\begin{itemize}
+%\item   The high-speed counters can not wrap up within the time 2Tof+TReply.
+%\item   If packets must be sent again due to reasons like interference or congestion, the high-speed counters can not wrap up during the procedure.
+%\end{itemize}
+    For TOA approaches, at least two high-speed counters are required for each node. For POA measurement, only one high-speed counter is required for each node. The length of the counter should be long enough such that within the time $t_{OF}$ it is not wrap up.
+    Although the chapter focuses on RF signals, the POA is a general idea, which is not limited to communication medium or communication protocols, such as such RF, or sound, or UWB, or CSS.
+
+\subsubsection{Phase-based Localization}
+The idea of phase-based localization is presented in Fig.~\ref{f:tof}.
+    The top of the figure is an illustration on the topological relation of the beacons and the mobile node. Since the positions of the beacons are known, the distance $r_{12}$ and its associated TOF $t_1$ are known. The distances $r_{1A}$, $r_{2A}$ are unknown, so do their associated TOF $t_2$, $t_3$. The 3 charts, from top to bottom, at the bottom of the Fig.~\ref{f:tof} are associated with the clocks on beacon 1, beacon 2 and the mobile node, respectively.
+        The comments of Fig.~\ref{f:tof} are the follows:
+
+\begin{figure}
+  % Requires \usepackage{graphicx}
+    \centering
+  \includegraphics[width=11cm]{img/PhaseLocSys}\\
+  \caption{Phase detection for TOF localization.}\label{f:tof}
+\end{figure}
+
+
+
+\begin{itemize}
+\item   The clocks on beacons and the mobile nodes are not synchronized. In the bottom of the Fig.~\ref{f:tof}, we see that the saw-like phases of the three clocks are not aligned.
+\item   On time $t_A$, beacon 1 broadcasts an impulse message, which is received by beacon 2 and the mobile node shortly. The POA measured by beacon 2 is $\theta_{12}$ and that by the mobile node is $\theta_{1A}$. Since the clocks are not synchronized, the initial phases on the three axes in Fig.~\ref{f:tof} are different.
+\item   Beacon 2 then must send an impulse message as soon as possible, with the same phase as it receives the impulse from beacon 1. If impulse is lost, e.g., communication collusion is detected while transmitting the impulse, then beacon 2 simply retransmits the impulse with a delay of one period of the reference signal. In the example shown by Fig.~\ref{f:tof}, on time $t_B$, beacon 2 broadcasts a message with the phase $\theta_{12}$. The POA of this message by the mobile node is $\theta_{2A}$. The delay between $t_B$ and $t_A$ is one or multiple periods of the reference signal. Comparing to Fig.~\ref{f:twr}, it is like that $T_{Reply}$ must be a non-negative integer multiplication of $T_r$, the period of the reference signal.
+% \item   The range between beacons 1 and 2 is $r_{12}$, which is known. The range between beacon 1 and mobile node A is $r_{1A}$. $r_{2A}$ is the range between beacon 2 and mobile node A. R1A and R2A are unknown and will be find out.
+\item   Thus, 2 communication packets are required. One from beacon 1 and is broadcasted to beacon 2 and the mobile node. Another packet is broadcasted from beacon 2 to beacon 1 and the mobile node. Beacon 1 does not need to response to the second packet.
+\end{itemize}
+
+
+% After an impulse is transmitted from beacon 1, both beacon 2 and the mobile node receive the signal. Since the network is not synchronized, the phase measurement of the impulse are different on beacon 2 and the mobile node. The measurements by beacon 1 and the mobile node are $\theta_{12}$ and $\theta_{1A}$, respectively. After the beacon 2 received the impulse, it relay the signal by transmitting the same impulse with the same phase after one or more cycle.
+
+
+In the 2D domain, at least three beacons are required to provide a unique location on the mobile node.
+ Fig.~\ref{f:tdoaPhase} illustrates the reason why synchronization is not required.
+  Because beacon 2 receives and transmits the message from beacon 1 with the same phase, it is like a virtual ``mirror'' that reflects the message from beacon 1. Thus, the difference between $\theta_{1A}$ and $\theta_{2A}$ indicates the difference between $r_{12}+ r_{2A}$
+    and $r_{1A}$. More precisely, if $\lambda$ is the wavelength of the reference signal, we have
+    $$\frac{(\theta_{2A}-\theta_{1A})\lambda}{n_P}+k_1\lambda = r_{12}+r_{2A}-r_{1A}, $$
+where $k_1$ is a natural number. Remind that $n_P$ is the maximum phase value. When $\lambda$  is big enough, then no wrapping on the phase counter is possible. Thus, no ambiguity is possible by mapping the phase to the distance. That is
+\begin{eqnarray*}
+  \frac{(\theta_{2A}-\theta_{1A})\lambda}{n_P} &=& r_{12}+r_{2A}-r_{1A}, \\
+  r_{2A}-r_{1A} &=& \frac{(\theta_{2A}-\theta_{1A})\lambda}{n_P} - r_{12}.
+\end{eqnarray*}
+That is, the mobile node is on a hyperbolic curve that subject to the following form
+\begin{equation}\label{e:diffofR}
+    r_{2A}-r_{1A}=d_{12},
+\end{equation}
+where
+\begin{equation*}
+d_{12} = \frac{(\theta_{2A}-\theta_{1A})\lambda}{n_P} - r_{12}.
+\end{equation*}
+In practice, estimation noise is always unavoidable. If we denote the noise associated with $d_{ij}$ as $e_j$, the following equation holds
+\begin{equation}\label{e:deij}
+z_{12}= r_{2A}-r_{1A}+e_2,
+\end{equation}
+where $z_{12}$ is the measure of $d_{12}$ based on sensor readings and $r_{2A}$, $r_{1A}$, $e_2$ are the unknown parameters.
+    To locate the mobile node uniquely on a 2D domain, more independent equations in the form of (\ref{e:diffofR}) are required. Let us take the 3-beacon scenario as an example. The cases with more beacons are similar to this case. See Fig.~\ref{f:tdoaPhase}, once installed, beacon 3 gets the message from beacon 1 when it broadcasts. Then, beacon 3 transmits the received signal just like beacon 2.
+
+
+
+\begin{figure}
+  \centering
+  \includegraphics[width=11cm]{img/TDOAloc}\\
+  \caption{2D Phase-based TDOA localization with 3 beacons.}\label{f:tdoaPhase}
+\end{figure}
+
+
+
+Repeat the above analysis and apply it to beacon 3. That is, replace beacon 2 in Fig.~\ref{f:tdoaPhase} by beacon 3. We have
+\begin{eqnarray*}
+  \frac{(\theta_{3A}-\theta_{1A})\lambda}{n_P} &=& r_{13}+r_{3A}-r_{1A}, \\
+  r_{3A}-r_{1A} &=& \frac{(\theta_{3A}-\theta_{1A})\lambda}{n_P} - r_{13},
+\end{eqnarray*}
+or
+\begin{eqnarray*}
+  r_{3A}-r_{1A} &=& d_{13}.
+\end{eqnarray*}
+Since beacon 3 and beacon 2 received the same broadcasting packet from beacon 1, only one more packet is required. If measurement noise is considered, the following equation holds
+$$ z_{13} =  r_{3A}-r_{1A} +e_3, $$
+where $z_{13}$ is the measurement on $d_{13}$.
+
+As an extension, if there are more than 3 beacons, the formulation for the POA method is as the follows:
+\begin{eqnarray*}
+  r_{2A}-r_{1A} &=& \frac{(\theta_{2A}-\theta_{1A})\lambda}{n_P} - r_{12}, \\
+  r_{3A}-r_{1A} &=& \frac{(\theta_{3A}-\theta_{1A})\lambda}{n_P} - r_{13}, \\
+  &\vdots& \\
+  r_{iA}-r_{1A} &=& \frac{(\theta_{iA}-\theta_{1A})\lambda}{n_P} - r_{1i}, \\
+  &\vdots& \\
+  r_{nA}-r_{1A} &=& \frac{(\theta_{nA}-\theta_{1A})\lambda}{n_P} - r_{1n}. \\
+\end{eqnarray*}
+The formulation can be converted into the standard TDOA form. After defining $d_i$ as
+$$ d_i=\frac{(\theta_{iA}-\theta_{1A})\lambda}{n_P} - r_{1i},$$
+we have
+\begin{eqnarray*}
+  d_i &=& r_{iA}-r_{1A},\; i\geq 2, \\
+  z_i &=& d_i+e_i, \; i\geq 2.
+\end{eqnarray*}
+For simplicity, the notation $r_{jA}, j\geq 1$ is replaced by $r_j$. That is
+\begin{eqnarray}
+ d_i &=& r_{i}-r_{1},\; i\geq 2, \label{e:di} \\
+ z_i &=& d_i+e_i. \nonumber
+\end{eqnarray}
+The TDOA can be solved by standard non-linear least squares (LS) methods, which can be formulated as the following equations:
+\begin{eqnarray*}
+% \nonumber to remove numbering (before each equation)
+   && \min_{\mathbf{p}} J_1(\mathbf{p}; \mathbf{q}) \\
+  J_1 &=& \frac{1}{2}\sum_{i=2}^{n}e^2_i = \frac{1}{2} \sum_{i=2}^{n}(d_i-r_i+r_1)^2, \\
+  r_i &=& \| \mathbf{p}-\mathbf{q}_i \|, \\
+  \mathbf{q} &=& \{q_1, q_2, \cdots, q_{n} \},
+\end{eqnarray*}
+where $\mathbf{q}_i$ is the position of the $i$-th beacon; $\mathbf{p}$ is the position of the mobile node; $r_i$ is the distance between mobile node and the $i$-th beacon; and $d_i$ is defined in (\ref{e:di}). $d_i$ is subject to measurement noise $e_i$. The optimal estimation on $\mathbf{p}$ is the $\hat{\mathbf{p}}$ as shown in the following equation:
+\begin{equation}\label{e:p}
+ \hat{\mathbf{p}}=\arg\min_{\mathbf{p}} J_1 (\mathbf{p}; \mathbf{q}).
+\end{equation}
+% Since the procedure of finding p* is a standard non-linear least square optimization, the details are not described in this article.
+
+
+\section{Beacon Placement Optimization}% 9 pages
+\subsection{Application Scenarios}
+    From (\ref{e:p}), it is easy to see that the estimation on $\mathbf{p}$ depends on the positions of the beacons, i.e., $\mathbf{q}$. A natural question to ask is that what is the proper positions for the beacons, in order to guarantee the precision on the estimation of $\mathbf{p}$?
+
+
+
+    In typical WSN TDOA localization systems, users have the freedom to choose the positions of the beacons. The placement of the beacons may affect the localization error significantly. For example, if any of the two beacons of a 3-beacon TDOA localization system is very close to each other, then one of the beacons is virtually invalid, and the positioning error could be significant.
+        When the domain of interested is unbounded or regular, the placement of the beacons could be intuitive. Beacons should be placed far apart from each other and not align on one line. However, the placement may not be intuitive in practice, for example, when the deployment domain of the beacons is irregular. Imaging a WSN-based localization system is deployed inside a building. The non-restrictive optimal beacon position could be out of the building, or within concrete walls, or other localizations where beacon placement are impossible. Such constraints should be considered. For outdoor environments, many obstacles, such as lakes, highways, and buildings could pose constraints to the beacon deployments. In addition, as~\cite{bulusu01adaptive} suggested, perturbation factors on beacon placement and spatial noises also call for systematic beacon placement methods.
+
+
+The beacon placement problem has been discussed in~\cite{bulusu01adaptive,WangEstrinInfomationSS05,YickOptBeaconPlacement04} from different aspects. Motivated by improving the precision of proximity localization systems, a heuristic adaptive beacon placement method is presented in~\cite{bulusu01adaptive}. Based on the positioning errors of the current beacon placement in a regular domain, this method select grid points to place beacons to enhance localization precision.
+    In~\cite{YickOptBeaconPlacement04} and \cite{WangEstrinInfomationSS05}, the beacon placement is optimized for multilateral localization, which are commonly formulated as LS problems. The beacon placement problem is formulated as a binary integer programming problem in~\cite{YickOptBeaconPlacement04}, where the domain of interested is separated by $16\times 10$ grids. One binary variable is associated with one grid point and indicates whether a beacon is on the point or not. The total number of beacons is minimized by the binary integer programming, subject to a constraint that the maximum distance from beacons to the mobile node must be no more than a certain threshold.
+        The optimal beacon placement pattern is discussed in~\cite{WangEstrinInfomationSS05}
+         based on an information theoretical approach. This is also a grid-based algorithm. In an open domain, several beacon placement patterns are compared based on the information entropy of the beacon signals. This method is applicable to domains where there is no constraints, or the domains which are so large that the most of the beacons are placed internally without being affected by the constraints on the boundary of the domain.
+
+
+The problem studied in this dissertation is close to that in~\cite{YickOptBeaconPlacement04} but different. In this dissertation, the beacon placement is optimized for robustness of the positioning. Base on the context of TDOA localization, we firstly solve a direct beacon placement problem, where a given number of beacons are placed within a complex domain such that the maximum positioning error is minimized. In other words, the deployment provides robust, uniform small positioning errors every where in the domain.
+    Next, a progressive beacon placement problem is addressed. Assuming the estimation precision does not satisfy our requirements and thus the system should be upgraded. Given the existing beacons, the progressive beacon placement method adds a given number of beacons, such that the maximum positioning error based on all the beacons is minimized.
+
+The concept and motivation of the progressive beacon placement are similar to that of the adaptive beacon placement method in~\cite{bulusu01adaptive}. However, irregular domains, robustness and multilateral localization have not been discussed by the latter method.
+\subsection{Problem Formulation}
+In order to design the beacons' positions, $\mathbf{q}$, properly, we formulate the issue as a rigorous optimization problem and solve it within the framework of optimal experimental design and semi-infinite programming (SIP).
+
+
+At first, a cost function should be constructed based on the covariance matrix of $\mathbf{\hat{p}}$, or $cov(\mathbf{\hat{p}})$. As what is presented in Chapters~\ref{s:MasnetIROS} and \ref{s:COSS}, $cov(\mathbf{\hat{p}})=M^{-1},$ where $M$ is the Fisher information matrix (FIM). Again, the D-optimality criteria, $\Psi(M)=-\ln\det(M)$, is applied to the FIM.
+
+
+Now, the beacon position optimization problem can be formulated as a min-max problem as follows:
+\begin{eqnarray}
+% \nonumber to remove numbering (before each equation)
+  \hat{\mathbf{q}} &=& \arg\min_{\mathbf{q}\in\Omega}\max_{\mathbf{p}\in\Omega} \Psi(M(\mathbf{p}; \mathbf{q})),\label{e:beaconPlac} \\
+  M &=& A^T A,\label{e:bplocFIM} \\
+  d_i &=& r_i - r_1,\nonumber \\
+  r_i &=& \| \mathbf{p} - \mathbf{q}_i \|,\nonumber \\
+  A &=& (\nabla_{\mathbf{p}} \mathbf{d})^T,\nonumber
+\end{eqnarray}
+where $\Omega$ is the domain that the beacons and the mobile node may be deployed inside.
+
+To solve the problem in (\ref{e:beaconPlac}), the sensitivity, $A$, is computed as the follows
+\begin{eqnarray*}
+  A &=& (\nabla_{\mathbf{p}} \mathbf{d})^T \\
+   &=& \left(
+         \begin{array}{ccc}
+           \frac{\partial}{\partial p._x} d_2& \cdots & %           \frac{\partial}{\partial p._x} d_i & \cdots &
+            \frac{\partial}{\partial p._x} d_n \\
+           \frac{\partial}{\partial p._y} d_2 & \cdots & %           \frac{\partial}{\partial p._y} d_i & \cdots &
+           \frac{\partial}{\partial p._y} d_n \\
+         \end{array}
+       \right) \\
+   &=& \left(
+         \begin{array}{ccccc}
+           r_1^{-1}(\mathbf{p}-\mathbf{q}_1)-r_2^{-1}(\mathbf{p}-\mathbf{q}_2) & \cdots
+           %& r_1^{-1}(\mathbf{p}-\mathbf{q}_1)-r_i^{-1}(\mathbf{p}-\mathbf{q}_i) & \cdots
+           & r_1^{-1}(\mathbf{p}-\mathbf{q}_1)-r_n^{-1}(\mathbf{p}-\mathbf{q}_n) \\
+         \end{array}
+       \right) \\
+        &=& ( \mathbf{a}_2 \cdots \mathbf{a}_n ) \\
+\end{eqnarray*}
+$\mathbf{a}_i$ is defined as this
+\begin{equation*}
+    \mathbf{a}_i = r_1^{-1}(\mathbf{p}-\mathbf{q}_1)-r_i^{-1}(\mathbf{p}-\mathbf{q}_i).
+\end{equation*}
+Thus, $\mathbf{a}_i$ is a column of the matrix $A$.
+$$ A(:,i) = \mathbf{a}_i,\; i\neq 1.$$
+In summary,
+\begin{eqnarray*}
+% \nonumber to remove numbering (before each equation)
+  M &=& A^T A , \\
+   &=& \sum_{i=2}^n \mathbf{a}_i \mathbf{a}_i^T. \\
+\end{eqnarray*}
+
+
+
+This problem can be solved by SIP method. A generic SIP problem is defined as the follows:
+\begin{mdef}[Semi-infinite Programming] \label{d:sip}
+When $f(x)$ and $g(x,s)$ are two functions, semi-infinite programming is the following optimization problem:
+\begin{eqnarray*}
+  \min_x && f(x),\\
+  \hbox{subject to:} && \forall s\in\Omega,\; g(x,s)\leq 0.
+\end{eqnarray*}
+\end{mdef}
+
+Thus, the direction optimal beacon placement problem can be formulated as a SIP problem.
+\begin{mdef}[Direct Optimal Beacon Placement]\label{d:dbp}
+Given acceptable beacon placement domain as $\Omega_1$ and the mobile node's placement domain $\Omega_2$, the direct beacon placement problem is to solve $\mathbf{q}_i,\; i\in[1,n]$ that satisfies the following formulation:
+\end{mdef}
+\begin{eqnarray*}
+  \min_{\mathbf{q}_i\in \Omega_1, i\in[1,n]} && \Psi[M(\mathbf{\hat{p}}; \mathbf{q}_i)],\\
+  \textrm{subject to:} && \max_{\mathbf{p}\in\Omega_2} \Psi[M(\mathbf{p}; \mathbf{q}_i)]-\Psi[M(\mathbf{\hat{p}}; \mathbf{q}_i)] \leq 0, \\
+  && \mathbf{\hat{p}} = \arg\max_{\mathbf{p}\in\Omega_2} \Psi[M(\mathbf{p}; \mathbf{q}_i)].
+\end{eqnarray*}
+\begin{remark}
+The equivalence between (\ref{e:beaconPlac}) and the definition~\ref{d:dbp} is more obvious if the above equations are simplified as:
+\begin{eqnarray}
+% \nonumber to remove numbering (before each equation)
+  \min_{\mathbf{q}} && y(\mathbf{q}), \label{e:simpleSip}\\
+  \textrm{subject to:} && \max_{\mathbf{p}} \Psi(M)\leq y (\mathbf{q}). \nonumber
+\end{eqnarray}
+Although not as precise as Definition~\ref{d:dbp}, (\ref{e:simpleSip}) captures the key concept and is easy to understand.
+    For simplicities, the examples in this dissertation have the same placement domains for beacons and the mobile node, i.e., $\Omega_1=\Omega_2$.
+\end{remark}
+
+The aforementioned progressive optimal beacon placement problem can also be formulated within the SIP framework.
+\begin{mdef}[Progressive Optimal Beacon Placement]
+Given $n$ beacons placed at the positions $\mathbf{q}_i\in\Omega_1\; i\in[1,n]$, the optimal position of additional $k$ beacons are $\mathbf{q}_j\in\Omega_1\; j\in[n+1,n+k]$, which are solved by the following formulation:
+\begin{eqnarray*}
+  \min_{\mathbf{q}_j\in \Omega_1, j\in[n+1,n+k]} && \Psi[M(\mathbf{\hat{p}}, \mathbf{q}_j;\mathbf{q}_i)],\; i\in[1,n]\\
+  \textrm{subject to:} && \max_{\mathbf{p}\in\Omega_2} \Psi[M(\mathbf{p}, \mathbf{q}_j;\mathbf{q}_i)]-\Psi[M(\mathbf{\hat{p}}, \mathbf{q}_j;\mathbf{q}_i)] \leq 0,  \\
+  && \mathbf{\hat{p}} = \arg\max_{\mathbf{p}\in\Omega_2} \Psi[M(\mathbf{\hat{p}}, \mathbf{q}_j;\mathbf{q}_i)],\; i\in[1,n] .
+\end{eqnarray*}
+\end{mdef}
+
+
+\subsection{Solution and Simulation}
+All the simulations in this chapter is based on a Matlab function named \texttt{fseminf}. The following paragraph is from the help on the function from Matlab.
+
+%\small
+\begin{verbatim}
+FSEMINF solves problems of the form:
+    min { F(x) | C(x)<=0 , Ceq(x) = 0 , PHI(x,w)<=0 }
+     x
+    for all w in an interval.
+
+    X=FSEMINF(FUN,X0,NTHETA,SEMINFCON) starts at X0 and finds minimum X
+    to the function FUN constrained by NTHETA semi-infinite constraints
+    in the function SEMINFCON. FUN accepts vector input X and returns
+    the scalar function value F evaluated at X.
+\end{verbatim}
+%\normalsize
+
+We need to provide two Matlab functions, \texttt{Jsip} and \texttt{JsipCont}, to characterize the cost function and constraints, which are the \texttt{C(x), Ceq(x)} and \texttt{PHI(x,w)} in the declaration of \texttt{fseminf}. In our simulation, the function is invoked as the following form
+%\begin{verbatim}
+\begin{equation}\label{e:fseminf}
+\texttt{Q=fseminf(@Jsip,Q0,2,@JsipCont)}
+\end{equation}
+%\end{verbatim}
+where \texttt{Q0} is the initial guess on \texttt{Q}, which is the optimized beacon positions in the following form
+$$ Q=[\mathbf{q}_1, \mathbf{q}_2, \cdots, \mathbf{q}_n].$$
+That is $\mathbf{q}_i=Q(:,i)$.
+    Each $\mathbf{q}_i$ is a column vector that represents the position of a beacon. The key task for the implementation is to incorporate the SIP in the two configuration functions, i.e., \texttt{Jsip} and \texttt{JsipCont}.
+
+In addition, for convenance, we write a function named \texttt{isInDomain} which judges if an array of points are inside the domain of interest or not. The function returns an array after getting a list of positions, $Q$, as the input. Each entry in the output array is associated with one position in the inputs. If the position of the input is not within the domain of interest, the associated output entry is -1, otherwise the entry is 1. This output array is actually the \texttt{C(x)} constraint in the \texttt{fseminf} function. The usage of the \texttt{isInDomain} function is shown in Tables~\ref{t:dirBplac} and \ref{t:proBplac}.
+
+
+The pseudo-code of the direct and progressive optimal beacon placement algorithms are listed in Tables~\ref{t:dirBplac} and \ref{t:proBplac}, respectively. The computation on the FIMs, $M_G$ and $M$, have been discussed. After the functions \texttt{Jsip} and \texttt{JsipCont} being called like the form in (\ref{e:fseminf}), the output is \texttt{Q}.
+    Comparing the two algorithms in Tables~\ref{t:dirBplac} and \ref{t:proBplac}, we see that the similarities between the two are significant. The different behaviors between them is mainly due to the fact that the positions for the existing beacons, i.e., $Q_S$, are a global variable in the \texttt{JsipCont} function for the progressive beacon placement algorithm, but not in the direct beacon placement algorithm. The positions for the beacons yet to be optimized is embedded in $Q$, which is the input variable for \texttt{Jsip} and \texttt{JsipCont} functions of the two algorithms. In other words, $Q$ is configured as the parameter to be optimized, but $Q_S$ is not.
+
+The input variable $s$ for the two \texttt{JsipCont} functions in Tables~\ref{t:dirBplac} and \ref{t:proBplac} are not used, since $s$ is required for internal usage by the Matlab optimization process only.
+    At this point, it is easy to understand the number 2 in (\ref{e:fseminf}), which is the number of semi-infinite constraints. Observing from the \texttt{JsipCont} functions in Tables~\ref{t:dirBplac} and \ref{t:proBplac} that there are two semi-infinite constraints, i.e., \texttt{PhiCon} and \texttt{QCon}, in the returning parameter list for each \texttt{JsipCont} function.
+ The global variable $\mathbf{p}$ is the max error position of the mobile node, where the associated $D_M$ entry has the largest value. Thus, $\mathbf{p}$ is the pseudo-code is $\arg\max_{\mathbf{p}\in\Omega}\Psi(M)$.
+
+
+Observe the pseudo-code, it is easy to see that other multilateral localization methods, such as TOA and AOA, can be studied in the same framework also. Almost everything in the pseudo-code is applicable, except the computations on FIMs are different. Thus, the proposed beacon placement methods are not limited to TDOA localization only.
+
+
+
+\begin{table}
+\caption{Pseudo-Code for the Direct Optimal Beacon Placement} \label{t:dirBplac}
+\lstset{language=Matlab, breaklines=true, numbers=left, texcl, mathescape=true }
+\begin{lstlisting}
+function J = Jsip(Q)
+global $\mathbf{p}$ $M_G$;
+
+$M_G=\sum_{i=1}^n \mathbf{a}_i(\mathbf{p};\mathbf{q}_i) \mathbf{a}_i(\mathbf{p};\mathbf{q}_i)^T$;
+J=$\Psi(M_G)$;
+return;
+
+function [c,ceq,PhiCon,QCon,s] = JsipCont(Q,s)
+global $\mathbf{p}$ $M_G$;
+% Q is the positions of all the beacons. $Q=[\mathbf{q}_1, \mathbf{q}_2, \cdots, \mathbf{q}_n]$.
+$\mathbf{p}$=meshgrid(linspace(0,1,$n_G$),linspace(0,1,$n_G$)); % segment the domain that surround the $\Omega$ into $n_G\times n_G$ grids.
+For each grid point $\mathbf{p}(r,c)$, where $r$ and $c$ are the row and column indices, respectively.
+    If $\mathbf{p}(r,c)\in\Omega$
+        $D_M(r,c)=\Psi\{M[\mathbf{p}(r,c); Q]\}$;
+    else
+        $D_M(r,c)=0$;
+    end
+end
+PhiCon=$D_M-\Psi(M_G)$*ones(size($D_M$));
+QCon=isInDomain(Q);
+$\mathbf{p}$=the position associated with  $\max D_M$;
+c=[];
+ceq=[];
+return;
+\end{lstlisting}
+\end{table}
+
+
+
+\begin{table}
+\caption{Pseudo-Code for the Progressive Optimal Beacon Placement} \label{t:proBplac}
+\lstset{language=Matlab, breaklines=true, numbers=left, texcl, mathescape=true }
+\begin{lstlisting}
+function J = Jsip(Q)
+global $\mathbf{p}$ $M_G$ $Q_S$; % $Q_S$ are the static beacons which have been placed.
+% $Q_S=[\mathbf{q}_{S1}, \mathbf{q}_{S2}, \cdots, \mathbf{q}_{Sn}]$.
+% Q is the positions of the additional beacons. $Q=[\mathbf{q}_{n+1}, \mathbf{q}_{n+2}, \cdots, \mathbf{q}_{n+k}]$.
+
+$M_G=\sum_{i=1}^n \mathbf{a}_i(\mathbf{p};\mathbf{q}_{Si}) \mathbf{a}_i(\mathbf{p};\mathbf{q}_{Si})^T + \sum_{j=n+1}^{n+k} \mathbf{a}_j(\mathbf{p};\mathbf{q}_j) \mathbf{a}_j(\mathbf{p};\mathbf{q}_j)^T$;
+J=$\Psi(M_G)$;
+return;
+
+function [c,ceq,PhiCon,QCon,s] = JsipCont(Q,s)
+global $\mathbf{p}$ $M_G$ $Q_S$;
+
+$\mathbf{p}$=meshgrid(linspace(0,1,$n_G$),linspace(0,1,$n_G$)); % segment the domain that surround the $\Omega$ into $n_G\times n_G$ grids.
+For each grid point $\mathbf{p}(r,c)$, where $r$ and $c$ are the row and column indices, respectively.
+    If $\mathbf{p}(r,c)\in\Omega$
+        $D_M(r,c)=\Psi\{M[\mathbf{p}(r,c); Q_S]\}+\Psi\{M[\mathbf{p}(r,c); Q]\}$;
+    else
+        $D_M(r,c)=0$;
+    end
+end
+PhiCon=$D_M-\Psi(M_G)$*ones(size($D_M$));
+QCon=isInDomain(Q);
+$\mathbf{p}$=the position associated with  $\max D_M$;
+c=[];
+ceq=[];
+return;
+\end{lstlisting}
+\end{table}
+
+
+The simulation results are included in Figs.~\ref{f:OptMinMaxPi} to \ref{f:BPlacProg}. In Figs.~\ref{f:OptMinMaxPi} to \ref{f:OptMinMaxHole}, the red diamond shapes indicate the optimized beacon positions. If the beacons are placed on the positions of the red diamonds, the worst case position estimation in this domain of minimized. Based on those figures and our experiments, we have the following observations
+\begin{itemize}
+\item There is virtually no restriction on the shape of the domain of interest. As far as the function \texttt{isInDomain} distinguish the internal and external positions of the domain, the algorithms in Tables.~\ref{t:dirBplac} and \ref{t:proBplac} are valid. As a comparison, the algorithms in \cite{bulusu01adaptive, WangEstrinInfomationSS05} are not applicable for arbitrary domains.
+\item Also, there is no restriction on the number of beacons to be placed or have been placed. For example, in Fig.~\ref{f:BPlacProg}, 5 beacons have been placed, and the positions of the 2 additional beacons are optimized. In Figs.~\ref{f:OptMinMaxPi} to \ref{f:OptMinMaxPi4}, the deployment on 3 beacons are optimized. It can be seen from the pseudo-code in Tables.~\ref{t:dirBplac} and \ref{t:proBplac} that beacon number does not have restrictions.
+\item The speed of the simulation is fast. On a Pentium 4 3Ghz PC, the execution time is from about 9 sec. to 160 sec. Considering that the grid size in our simulation is $100\times 100=10,000$ ($n_G=100$ in Tables.~\ref{t:dirBplac} and~\ref{t:proBplac}), which is considerable large, the speed of the simulation is fast.
+\item The optimal beacon placement for irregular domains may not be intuitive. For example, intuitively, the right beacon in Fig.~\ref{f:OptMinMaxPi3} may be placed on the right-most hemisphere boundary of the domain, since this position ensure that more area are covered by the triangle make up from the three beacons.
+    However, the result of the optimization does not support this intuition. In fact, the beacon placements in Figs.~\ref{f:OptMinMaxPi2} to~\ref{f:BPlacProg} are not very intuitive also. These result supports the claim that systematic optimization on the beacon placement is necessary.
+\item We observed that the optimized solution may not be unique. For example, the domain of interest in Fig.~\ref{f:OptMinMaxPi} is a square, which is symmetric. The optimal positions of the beacons must be symmetric. Thus, if the beacon positions in Fig.~\ref{f:OptMinMaxPi} are rotated by 90 degrees, the new positions should have the same cost as the current solution.
+\item Follow the above observation, it seems that, similar to common non-linear optimization, the outputs of the algorithms are local optimum solutions. The global minimum solution is not guaranteed to be found. In the simulations, we observed that the initial values affect the final results. In practice, it is suggested to execute the optimization several times with different random initial values. This simple strategy helps to find the global minimal solution. Of course, there are many other strategies for the global optimization, which is a rich research topic. Due to limited space, no further discussion on the global optimization is presented.
+\end{itemize}
+
+
+
+
+
+\begin{figure}
+  \centering
+  \includegraphics[width=0.7\textwidth]{img/OptMinMaxPi}\\
+  \caption{Direct optimal beacon placement for TDOA localization, domain 1.}\label{f:OptMinMaxPi}
+\end{figure}
+
+
+\begin{figure}
+  \centering
+  \includegraphics[width=0.7\textwidth]{img/OptMinMaxPi2}\\
+  \caption{Direct optimal beacon placement for TDOA localization, domain 2.}\label{f:OptMinMaxPi2}
+\end{figure}
+
+\begin{figure}
+  \centering
+  \includegraphics[width=0.7\textwidth]{img/OptMinMaxPi3}\\
+  \caption{Direct optimal beacon placement for TDOA localization, domain 3.}\label{f:OptMinMaxPi3}
+\end{figure}
+
+
+\begin{figure}
+  \centering
+  \includegraphics[width=0.7\textwidth]{img/OptMinMaxPi4}\\
+  \caption{Direct optimal beacon placement for TDOA localization, domain 4.}\label{f:OptMinMaxPi4}
+\end{figure}
+
+
+\begin{figure}
+  \centering
+  \includegraphics[width=0.7\textwidth]{img/OptMinMaxHole}\\
+  \caption{Direct optimal beacon placement for TDOA localization, domain 5.}\label{f:OptMinMaxHole}
+\end{figure}
+
+
+\begin{figure}
+  \centering
+  \includegraphics[width=0.7\textwidth]{img/BPlacProg}\\
+  \caption{Progressive optimal beacon placement for TDOA localization, domain 5.}\label{f:BPlacProg}
+\end{figure}
+
+
+\section{Chapter Summary}
+In this chapter, an asynchronous TDOA localization method for energy efficient and low cost WSN localization is proposed, namely, phase of arrival localization. The solution can be transferred into the standard TDOA formulation.
+    In order to minimize the maximum positioning errors within deployment domains, two algorithms are proposed to optimize the placement of the beacons, based on SIP (semi-infinite programming) approaches.
+These two algorithms are targeted at direct and progressive optimal beacon placement, respectively. Comparing to the related beacon placement methods, the proposed approaches are fast and have no constraints the shapes of the beacon deployment domains.

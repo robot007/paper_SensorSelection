@@ -1,0 +1,222 @@
+﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <ProjectType>Local</ProjectType>
+    <ProductVersion>8.0.50727</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{DF120705-84DF-47D7-A961-7EBB646852CD}</ProjectGuid>
+    <SccProjectName>"$/SensorDataAcquisitionPlatform/DataAcquisitionService", TSAAAAAA</SccProjectName>
+    <SccLocalPath>.</SccLocalPath>
+    <SccProvider>MSSCCI:Microsoft Visual SourceSafe</SccProvider>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ApplicationIcon>
+    </ApplicationIcon>
+    <AssemblyKeyContainerName>
+    </AssemblyKeyContainerName>
+    <AssemblyName>DataAcquisitionService</AssemblyName>
+    <AssemblyOriginatorKeyFile>
+    </AssemblyOriginatorKeyFile>
+    <DefaultClientScript>JScript</DefaultClientScript>
+    <DefaultHTMLPageLayout>Grid</DefaultHTMLPageLayout>
+    <DefaultTargetSchema>IE50</DefaultTargetSchema>
+    <DelaySign>false</DelaySign>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>DataAcquisitionService</RootNamespace>
+    <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
+    <StartupObject>
+    </StartupObject>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <OutputPath>bin\</OutputPath>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <BaseAddress>285212672</BaseAddress>
+    <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
+    <ConfigurationOverrideFile>
+    </ConfigurationOverrideFile>
+    <DefineConstants>
+    </DefineConstants>
+    <DocumentationFile>
+    </DocumentationFile>
+    <DebugSymbols>true</DebugSymbols>
+    <FileAlignment>4096</FileAlignment>
+    <NoStdLib>false</NoStdLib>
+    <NoWarn>
+    </NoWarn>
+    <Optimize>false</Optimize>
+    <RegisterForComInterop>false</RegisterForComInterop>
+    <RemoveIntegerChecks>false</RemoveIntegerChecks>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <WarningLevel>1</WarningLevel>
+    <DebugType>full</DebugType>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <OutputPath>bin\</OutputPath>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <BaseAddress>285212672</BaseAddress>
+    <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
+    <ConfigurationOverrideFile>
+    </ConfigurationOverrideFile>
+    <DefineConstants>
+    </DefineConstants>
+    <DocumentationFile>
+    </DocumentationFile>
+    <DebugSymbols>false</DebugSymbols>
+    <FileAlignment>4096</FileAlignment>
+    <NoStdLib>false</NoStdLib>
+    <NoWarn>
+    </NoWarn>
+    <Optimize>false</Optimize>
+    <RegisterForComInterop>false</RegisterForComInterop>
+    <RemoveIntegerChecks>false</RemoveIntegerChecks>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <WarningLevel>1</WarningLevel>
+    <DebugType>none</DebugType>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="dotnetCharting.WinForms, Version=3.4.2196.23689, Culture=neutral">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\External\CorporateWebSolutions\DotNetCharting\dotnetCharting.WinForms.dll</HintPath>
+    </Reference>
+    <Reference Include="System">
+      <Name>System</Name>
+    </Reference>
+    <Reference Include="System.Data">
+      <Name>System.Data</Name>
+    </Reference>
+    <Reference Include="System.Drawing">
+      <Name>System.Drawing</Name>
+    </Reference>
+    <Reference Include="System.Runtime.Remoting">
+      <Name>System.Runtime.Remoting</Name>
+    </Reference>
+    <Reference Include="System.Web">
+      <Name>System.Web</Name>
+    </Reference>
+    <Reference Include="System.Web.Services">
+      <Name>System.Web.Services</Name>
+    </Reference>
+    <Reference Include="System.Windows.Forms">
+      <Name>System.Windows.Forms</Name>
+    </Reference>
+    <Reference Include="System.Xml">
+      <Name>System.XML</Name>
+    </Reference>
+    <ProjectReference Include="..\..\..\Documents and Settings\michael\My Documents\Visual Studio 2005\Projects\WorkflowOptimizer\GraphLibrary\GraphLibrary.csproj">
+      <Project>{59DFE4CA-E7EA-48C7-A180-33FDD1C0CB45}</Project>
+      <Name>GraphLibrary</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Documents and Settings\michael\My Documents\Visual Studio 2005\Projects\WorkflowOptimizer\MoteLocalization\MoteLocalization.csproj">
+      <Project>{69C5DD94-2C1B-443D-A7A7-F3EB9229FA3F}</Project>
+      <Name>MoteLocalization</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\HermesMiddleware\CameraLibrary\CameraLibrary.csproj">
+      <Project>{2EE6DAF3-5E66-48EF-A1DB-373BF5AB067D}</Project>
+      <Name>CameraLibrary</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\HermesMiddleware\CommonLibrary\CommonLibrary.csproj">
+      <Name>CommonLibrary</Name>
+      <Project>{1567D321-594F-4745-BE21-89DDFC09BEF6}</Project>
+      <Package>{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</Package>
+    </ProjectReference>
+    <ProjectReference Include="..\..\HermesMiddleware\DataAcquisitionLib\DataAcquisitionLib.csproj">
+      <Project>{34478AB7-EB8A-4122-8070-F9FCB9495C2E}</Project>
+      <Name>DataAcquisitionLib</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\HermesMiddleware\DBLibrary\DBLibrary.csproj">
+      <Name>DBLibrary</Name>
+      <Project>{9D27CA87-19D3-4ADB-850F-B46E3294BA43}</Project>
+      <Package>{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</Package>
+    </ProjectReference>
+    <ProjectReference Include="..\..\HermesMiddleware\GUILibrary\GUILibrary.csproj">
+      <Name>GUILibrary</Name>
+      <Project>{5F8CED5E-786A-424F-B86C-3198CEF13B07}</Project>
+      <Package>{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</Package>
+    </ProjectReference>
+    <ProjectReference Include="..\..\HermesMiddleware\MoteLibrary\MoteLibrary.csproj">
+      <Name>MoteLibrary</Name>
+      <Project>{E86F7337-E0C6-41CB-9261-A62E3711E4A6}</Project>
+      <Package>{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</Package>
+    </ProjectReference>
+    <ProjectReference Include="..\..\HermesMiddleware\WebLibrary\WebLibrary.csproj">
+      <Name>WebLibrary</Name>
+      <Project>{4226246D-45C7-4B45-97A0-0598F5D27385}</Project>
+      <Package>{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</Package>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="CholeskyDecomposition.cs" />
+    <Compile Include="DataAcquisitionServiceImpl.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="DSNPerformanceForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DSNPerformanceForm.Designer.cs">
+      <DependentUpon>DSNPerformanceForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="EigenvalueDecomposition.cs" />
+    <Compile Include="Event.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="EventSubscriber.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="EventSubscription.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Global.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="LuDecomposition.cs" />
+    <Compile Include="MainForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MainService.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Matrix.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="QrDecomposition.cs" />
+    <Compile Include="RawClientCommunicator.cs" />
+    <Compile Include="SensorSelection.cs" />
+    <Compile Include="SingularValueDecomposition.cs" />
+    <Content Include="DataAcquisitionService.asmx" />
+    <Content Include="DataAcquisitionService.ico" />
+    <EmbeddedResource Include="DSNPerformanceForm.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>DSNPerformanceForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MainForm.resx">
+      <DependentUpon>MainForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <SubType>Designer</SubType>
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <None Include="App.config" />
+    <None Include="DataAcquisitionService.mdb" />
+    <None Include="Key.snk" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PreBuildEvent>
+    </PreBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
+  </PropertyGroup>
+</Project>

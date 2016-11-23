@@ -1,0 +1,319 @@
+\chapter{Introduction}\label{s:intro}
+\section{Background And Literature Review}
+\subsection{What is Sensor Network}
+Sensor network~\cite{AkyildizSurveySN} is considered as ``one of the important technologies of the 21st century''~\cite{ChongSensornet}. In general, sensor network is referring to sensors that has been connected by computer networks. The sensors measure physical quantities of the world, while computer networks integrate and interpret sensor data.
+
+This concept was proposed decades ago. For example, it is common to see networked data acquisition (DAQ) systems, such as Labview systems\cite{labview}, in industry. However, many researchers have recognized that the modern computer, sensor and communication technologies has significantly changed the sensor networks.
+
+Since microprocessors are very affordable now, sensor data can be processed by local processors before being transmitted to the base station, or the sink. The concept of ``smart sensor'' can be realized recently.
+
+% \item MEMS technologies significantly reduce the size and cost of many sensors. For example, it is easy to buy a finger-nail size MEMS accelerometer chip under \$20 today. It can powered by batteries. In the past, accelerometers are in the size of tens of centimeters and can hardly to powered by batteries.
+
+Communication technologies, either wired or wireless, are significantly improved in the past several years. Wireless technologies are especially under fast developments. %For example, the sizes, price and power consumptions of modern cell phones are significantly reduced in the past several years.
+More and more new communication technologies have been developed. WiFi, Bluetooth, CDMA, UWB, etc. Comparing to the past, it is much easier to connect thousands of sensor nodes with the help of those new technologies.
+
+
+     Due to these new enabling technologies, the methods to deploy sensors and collect the sensor data are also different from before. In general, those new technologies have potentials to reduce the cost of sensor networks, improve the energy efficiency, network scalability and reliability. How to properly use those new technologies is an active research topic.
+
+The sensor networks can be classified into different categories. Among them, wireless sensor network (WSN)~\cite{ZhaoGuibasWSN2004,akyldizSurvey} and distributed sensor network (DSN)~\cite{Qi01survey} are among the two most important categories of sensor networks. This dissertation focuses on WSNs.
+
+
+\subsection{Introduction to WSN}
+WSNs~\cite{ZhaoGuibasWSN2004,akyldizSurvey,Estrin01Instrumenting} are not just traditional sensor networks with wireless communications. In fact, the philosophy of WSNs is different from other sensor networks in the past. The deployment methods, power consumption requirements and network protocols for WSNs are different than those wired sensor networks.
+
+    Currently, the computer and communication technologies have arrived in a stage where the hardware cost is so low that massive dense deployment of the wireless sensor nodes is affordable. A densely deployed WSN provides more samples on the physical world and improves the observation. However, the costs of replacing batteries for large scale sensor networks are significant.
+    It is very important to improve the network life time by various of energy saving methods.
+      The energy efficient protocols of WSN are under active research. Comparing to generic wireless communication protocols, the energy efficient protocols of WSN commonly uses knowledge on the structure of the sensor data to improve the performance. For example, data-centric routing approach~\cite{Krishnamachari_infocom02} is proposed to replace IP-based routing: the route is computed based on the relative position between the data and the sensors, instead of IP addresses of the sensors. In addition, due to the nature of wireless communication, the topology of the network is not statics. The wireless communication protocols must adjust the route accordingly~\cite{rangwala06}.
+
+    The future of WSN may come to the scenario of ``smart dust''\cite{PisterSmartdust01}: each sensor node is very small, even close to the size of dust. On the sensor nodes, microprocessors, sensors, communication devices, or energy harvesting apparatus are fully integrated. To explore the capability of the sensors, the sensor nodes are deployed in massive scales at high densities. Comparing to traditional sensor networks, the WSNs are in larger scale and normally work in distributed fashion.
+
+
+The following items are some common features of wireless sensor networks:
+
+\begin{itemize}
+\item The WSN protocols support large scale networks.
+For example, IEEE 802.15.4 standard~\cite{Standard802.15.4.2003} is used in some sensor network products. The standard supports $2^{32}$ sensor nodes per network, in theory.
+    In the literature of sensor network protocol design, it is common to see that a certain algorithm is tested on a network with tens of sensor nodes~\cite{rangwala06,WelshMoteTrack_LoCA2005-PUC} and simulated with hundreds or thousands of nodes~\cite{VuranSpatioTemporal04,Qi01survey}.
+ The sizes of WSNs are in larger scales comparing to most of other wireless communication protocols. For example, the Bluetooth standard was designed for Wireless Personal Area Network (WPAN) in stead of sensor network. The Bluetooth standard only supports 8 devices per network~\cite{wiki:piconet}.
+\item The costs of wireless communication are relatively low, in terms of money, energy and computation. For example, the maximum power consumption of Telos mote, an example of WSN sensor node, is in the level of tens milliwatts and the communication stack is small enough for low cost microprocessors~\cite{Polastre-telos}. The price of that Telos sensor node is around \$70 at the moment. As a comparison, WiFi (IEEE 802.11) devices are normally powered by wires, instead of by common AA batteries, because their energy consumption is much higher. In addition, WiFi devices are normally more costly and have larger form factors.
+\item The sensor nodes have certain computing capabilities. Sensor data are normally pre-processed on the sensor nodes. The pre-processing could be data filtering, compression, or encryption on the information of interest. For example, the sensor data may be stored on a local database~\cite{GehrkeQueryProc2004} and the node only delivers the data that are queried by the base station. Taking the advantages of the on-board processing power the valuable communication resources are used for efficiently.
+\item The sensor nodes are normally deployed densely. Usually, dense deployment is more preferable as far as it is affordable. A denser deployment provides better estimation resolution on the physical world.
+\item Sensor networks are normally supported by specially designed communication hardware or protocols. Due to the difference between sensor data and generic communicate data, such as speech or video, the generic communication systems are not the most efficient approach for sensor data transportation. For example, instead of pursuing high communication speed, as many other communication standards do, the IEEE 802.15.4 standard employs low rate communication. Since high speed is not required by many sensor systems, adopting low rate communication is a better strategy, in terms of cost, size and energy requirements, etc.
+\end{itemize}
+
+    %The difference between WSNs and traditional sensor networks are listed in the followings:
+%
+%\begin{itemize}
+%\item Energy efficiency is of vital importance to WSNs. Given the large number of sensors, it is often very hard to replace the batteries on each of the sensor nodes. Although different hardware have been constructed to harvest energy in the environments, the available energy is still very limited. Thus, energy efficiency is the essential consideration for WSN hardware and software designs, communication protocols and information processing algorithms. Many existing algorithms, such as the standard target tracking problems, are developed for generic sensor network, and thus they do not consider energy efficiency.
+%\item WSNs are distributed systems: not only the data are distributed among different sensors, the computation are usually distributed too.
+%% It is desirable to execute on those
+%     Unlike the traditional sensors, each sensor node of a WSN has computation capability. Thus, sensor data are normally filtered before being transmitted to the base station. Since the energy cost for the filtering is much less than the energy used for wireless transmission, computation on the sensor could significantly reduce the total energy cost.
+%
+%% \item The existing networking protocols, such as TCP/IP, Fieldbus, etc., do not satisfy the requirements of WSNs. A fundamental reason is that WSNs are normally data centric.
+%\end{itemize}
+
+
+
+
+WSN can be used in a wide variety of remote monitoring and control applications ranged from environmental and human body monitoring~\cite{MalanCodeBlue}
+ to military surveillance~\cite{OgrenCooperativeControl, dutta06radar, DutteLitespaper}, building automation~\cite{Crossbow2006}, industrial monitoring and control~\cite{KevanShipboardPM06}, homeland security~\cite{SimonCountersniper2004}, air pollution detection~\cite{LiuDualSpaceAppTracking}, wild fire monitoring~\cite{DoolinaFirebugSPIE05}, detection of persons and
+vehicles in open areas~\cite{DuttamirMote}, and reconnaissance tasks~\cite{ZhaoGuibasWSN2004}, etc..
+    In typical remote monitoring applications, sensor nodes are deployed in an ad hoc manner over an area of interest.
+Individual sensor nodes can measure physical quantities and communicate sensing information to other sensors or to a sink (base station) by radio. Furthermore, sensor nodes have a limited ability to process information on an on-board CPU, and can store that information in memory. This is the reason why such wireless sensors are sometimes referred to as smart sensors or smart dust. The
+on-sensor processing and on-sink processing should cooperatively interpret sensor data to observe environments in energy efficient approaches. Although each individual node has limited capability, several such nodes can cooperate to accomplish complex tasks. To put it succinctly, WSNs provide the ability to connect the physical world to enterprize computing systems, thereby improving business processes and facilitating efficient decision making.
+
+
+
+\subsection{Research on WSNs from Different Aspects}
+As an interdisciplinary topic, WSNs have been studied from many different aspects by researchers from different backgrounds. Because the interpretation on the sensor data and the structure of the sensor data are application-dependent, to our best knowledge, there is no unified theory that integrates all the sensor network design problems into one framework. Most of the research in sensor network are conducted under the guidance of one of the following aspects:
+\begin{itemize}
+  \item Communication and networking aspect: how to send information by WSNs.
+  \item Signal and system aspect: what information are useful and should be sent.
+  \item Data and service aspect: how to store and query data.
+\end{itemize}
+
+Hereby we classify and review the current literatures based on the proposed classification methods.
+
+\subsubsection{Communication and networking}
+WSNs can be considered as networked communication systems. From the aspect of networking, new protocols or communication devices can be designed, in order to transport the input data to the sink and satisfies certain quality of services (QoS). Some examples of commonly considered QoS include network throughput, packet reception rate, delay, etc.
+
+    In the comprehensive survey for the protocols of sensor networks~\cite{AkyildizSurveySN}, the differences between WSNs and traditional ad hoc networks are summarized as the follows:
+\begin{itemize}
+  \item WSNs are deployed in much larger numbers with higher densities, and prone to failures.
+  \item The topologies of WSNs are frequently changing.
+  \item Sensor nodes have limited capabilities of power, computation and memory.
+  \item Each sensor node may not have an unique ID.
+\end{itemize}
+
+
+WSNs are also compared with the Internet~\cite{CullerOverviewWSN05,Estrin01Instrumenting}.
+\begin{itemize}
+  \item Self-organizing is more important for WSNs.
+  \item The routing method used in the Internet is not practical for WSNs. Instead, routing methods based on sensor location or sensor values may be more effective.
+  \item Constraints on bandwidth and energy are more limited for WSNs.
+\end{itemize}
+
+
+    Traditionally, computer networks are implement by different layers. The classical TCP/IP model has 5 layers. They are physical layer, data link layer, network layer, transport layer, and application layer. Most of the layers have their counterparts in WSN protocols.
+
+
+    On the physical layer, the central task is to develop low-cost and energy-efficient radios, on which both the academia and industry are keep proposing new solutions~\cite{korber05embedding,Standard802.15.4.2003,SensicastEMS,White_Paper_nanoNET-2,Rabaey2000b}. On the data link layer, different Media Access Control (MAC) protocols are proposed. Some are developed for general sensor networks~\cite{YeSmac_infocom02} and some are designed  for specific application~\cite{VuranSpatioTemporal04}.
+    The network layer is responsible for network routing. Common routing metrics include the number of hops, RSSI, and link quality, etc.~\cite{Multihop2003}. %The structure of the sensor data are also used for routing~\cite{EstrinDirectedDiff}.
+
+    This layered network communication model is widely adopted. However, since it was developed for generic communication, it may not satisfy the requirements of WSNs. As paper~\cite{CullerPlostreSNA} observed, a key challenge of the current sensor network systems is the lack of a general communication model. Many protocols behave well with them alone, but does not cooperate with each other. In fact, the layered model is not the only solution. For example, hybrid designs do not follow the layered model~\cite{CullerPlostreSNA,AkyildizSurveySN}. In the hybrid models, one or several modules are operating cross several layers.
+
+    In summary, WSNs can be considered as a new type of computer networks. In addition to pursuit classical network performances, such as high throughput, high packet reception rate (PRR), and low message delivery delay, some new criteria, such as energy efficiency, fault tolerance and scalability, should also be considered.
+        A good network model should be able to balance different performances and trade off the costs, in order to satisfy individual applications as much as possible.
+
+
+    % In our opinion, the difficulty mainly come from the fact that sensor networks are not just communication systems. They are frequently also observers of complex systems. Thus, although the layered model was very successful in the Internet, the model may not be suitable for the whole sensor network.
+
+\subsubsection{Signal and system}
+WSNs are commonly used to observe physical systems. The sensor measurements can be considered as signals, while the network is an imperfect communication channel, which introduces delays and packet drops, etc. Thus, there are many challenges on signal processing and system identifications for WSNs. The follows are some examples.
+\begin{itemize}
+  \item Sensor calibration: Unlike the calibration for a single-sensor system, calibration on sensor networks is more complex. Since there are normally a large number of sensors in the network, it is normally impossible to manually calibrate sensors one by one. Automatic and systematic calibration methods are required~\cite{FengActSenCal2006,WhitehouseCuller2005}.
+  \item Sensor selection and placement: Due to the properties of the physical systems, the ``quality'' of the sensor data is position-dependent. In order to save the communication energy, we need to ensure that just enough ``good'' data are sent through the communication channels; no ``bad'' data or ``more than enough'' data should be transmitted.
+  %only high quality data should be transmitted and used for system estimations.
+   It is important to select sensors or positions of the sensors based on the quality of their sensing data~\cite{zhao03collaborative,WangEstrinInfomationSS05,VuranSpatioTemporal04,YickOptBeaconPlacement04}.
+  \item Mobility of sensor node: Mobile sensor nodes are feasible in the context of WSNs. Some methods are proposed to take the advantages of the mobility of sensor nodes for better sensing~\cite{SongOptMobileSensIROS05,CaoDiffGame2006,Meliou2006,MurrayDecActiveSensing}.
+  \item Detection and estimation: It is desirable to have distributed detection or estimation algorithms, in order to enhance the scalability and fault tolerance of WSNs. For example, distributed regression~\cite{Guestrin2004}, distributed least squares fitting~\cite{XiaoBoydLallp2p_ls} and other distributed algorithms~\cite{RossiMonitoringDif,LiuDualSpaceAppTracking} are discussed.
+  \item Target tracking: As an extension to the classic target tracking problem, energy efficient or distributed tracking are discussed~\cite{SAM2006Amit,FZhaoShinInfoDrivenDynamicTracking,AslamBinaryTrackingWSN2003,ArandaOptSensorPlacement05},
+   under the context of WSNs.
+\end{itemize}
+
+
+Of course, there are much overlapping on the above topics. For example, Aranda et al take the advantages of the mobility of robotic wireless sensor nodes to track targets~\cite{ArandaOptSensorPlacement05}.
+
+% The intuition is easy to understand. However, in practice, it may not be trivial to judge the quality of a sensor data, or decide when ``enough'' data have been collected. For instances, the examples in papers~\cite{isler06tase,VuranSpatioTemporal04} indicate that a small number of sensors may provide estimation as good as many sensors.
+%    The theories on information, signal processing, control system and statistics provide tools to quantify the quality and quantity of the information.
+
+
+%The theory on signal processing shows us the intrinsic properties of the incoming signals, i.e., the sensor data. For example, the uncertainty of information can be quantified by entropy. The higher the uncertainty, the bigger the entropy.
+%
+%In~\cite{wang04entropybased}
+
+The knowledge on the physical model of the system under observation may significantly improve estimation precision and reduce the energy cost.
+    For example, we may want to deploy a WSN-based predictive maintenance system on an expensive engine~\cite{KevanShipboardPM06} to predict possible failures in future. If the model of the engine is known, some important questions can be answered. By analyzing the physical model of the engine, we can determine the observability of an internal physical quantity, e.g., an internal state. If it is not observable, then the quantity can not be estimated, no matter how many sensors are installed.
+        Based on the model, the sensor deployment can be optimized.         For example, one approach for the optimal sensor placement problem is to formulate it as a convex optimization problem.
+        The problem can be solved under the framework of optimal experiment design~\cite{UcinskiOptDPS05,fedorov94optimal,MurrayDecActiveSensing}.
+
+
+
+\subsubsection{Data and service}
+Wireless sensor networks can be considered as distributed database systems. The users may query the data that have been collected by the sensor nodes. Due to the unique properties of the WSNs, the queries on WSNs are not the same as the queries on standard databases.
+
+For WSNs, the users are interested in high level information, and data aggregations are usually required. For example, one may query ``the averaged temperature of the 4th floor,'' instead of the measurements on temperature values of each sensor. One method to implement the above query is to aggregate the sensor data at sink~\cite{GehrkeQueryProc2004}.
+
+
+Although the query on WSN can be considered as a special routing problem~\cite{madden02design} and implemented by the standard address-centric routing, this approach may not be efficient, since the raw sensor data have much redundant information. It may be more efficient to transmit raw data by the address-centric routing methods, where the sensor data may be aggregated during the transmission. The route may be affected by the sensor data~\cite{Krishnamachari_infocom02}.
+
+
+
+\section{Dissertation Motivation and Application Scenarios}
+\subsection{Motivation and Scenarios of MAS-net}
+        Chapter~\ref{s:MasnetIROS} is motivated by our project named MAS-net, which stands for mobile actuator-sensor networks (MAS-net)~\cite{MooreChen04,MASnetSPIE04ZoneControl,masnetspie04pathplan, ZhongminRobio04, PchenMS, AnishaMS}.
+    This project is proposed to combine the latest sensor network technologies with robotics technologies for an application-oriented high-level tasks, namely, characterize, estimate and control diffusion process by networked mobile actuators and sensors.
+
+
+The future working scenario of the MAS-net system is presented in~\cite{Moorewhitepaper03,MooreChen04}. Hereby we review it in brief. The scenario is shown in Fig.~\ref{f:app}. The numbers of the following comments are associated with the plots with the same numbers in Fig.~\ref{f:app}.
+\begin{enumerate}
+\item In the middle of a city, terrorists release a plume of chemical, biological, radiological (CBR) fog to the air. The diffusion of the plume is influenced by the
+city building structures and the air flow. The poisonous plume is detected by a static sensor network.
+\item  A group of Unmanned Aerial Vehicles (UAVs) receive commands from a base station to estimate the boundary of the
+dangerous plume. Equipped with proper sensors and wireless communication modules, these UAVs make up an ad hoc
+wireless sensor network.
+\item  UAVs fly toward the plume and transmit their sensor data back to the base station in real-time.
+\item  Initially, the plume estimation program running at the base station does not have the full knowledge on the parameters of the plume
+diffusion model. While getting more and more information from the sensors, the estimated parameters converge to the
+true values, and the plume boundary prediction becomes more and more precise. Meanwhile, the base station sends
+commands to direct the UAVs to the estimated future boundary area, where they gather new information.
+\item  Once the CBR plume is satisfactorily defined, the UAVs are redirected to the appropriate locations to release proper
+anti-agents to eliminate the plume.
+\item  The plume is eliminated within the minimum time (or satisfying other optimization constraints). The city becomes safe again.
+\end{enumerate}
+
+\begin{figure}[!h]
+\begin{center}\includegraphics[%
+  width=\fwB,
+  keepaspectratio]{img/cbrplume}
+  \end{center}
+\caption{A typical working scenario for mobile actuator-sensor network.\label{f:app}}
+\end{figure}
+
+
+The MAS-net problem is challenging. Thus, a simplified problem is discussed in the dissertation. In the problem, differentially-driven robots equipped with sensors measure a diffusing fog. The fog is within a flat container with a transparent cover. Since the height of the container is not much, the diffusion can be considered within a 2D domain, instead of 3D. In the current stage, the motivation is to observe the fog by those mobile robots.
+
+The configuration of the MAS-net testbed is shown in Fig.~\ref{f:masnet2D}. A program called Integrated Control System (ICS) is executing on a PC named base station. From the Graphical User Interface (GUI) of the ICS, users can control the MAS-net testbed.
+    The base station is connected to a wireless sensor node, MICA2 board, through the programming board. The base station communicates with the so called MASmote~\cite{ZhongminRobio04} robots via this sensor node.
+        The MASmotes are palm-size differentially driven robots that equipped with fog sensors and wireless sensor boards, which can communicate with the base station and other MASmotes. The fog sensors estimate the concentration of the fog underneath the transparent cover, on top of which the MASmotes maneuver.
+    A camera is hung on top of the testbed and connected to the base station. Based on the video stream from the camera, the ICS on the base state detects the positions and orientations of the MASmote robots according to the unique markers on top of each robot.
+
+    \begin{figure}[htb]
+       \centering
+       \includegraphics[width=0.75\textwidth]{img/2DMasnetTestbed2}
+       \caption{2D testbed configuration for MAS-net project.}
+       \label{f:masnet2D}
+     \end{figure}
+
+
+
+    The fog is generated by a stage fog machine and diffuses under the cover. An electrical fun is placed close to the fog machine to simulate the wind. To simulate city structures, some obstacles are placed under the cover to provide complex boundary conditions that similar to engineering practices.
+        A picture of the testbed is shown in Fig.~\ref{f:masnetpic}. In this picture, the markers are not placed on top of the robots. The MASmote robots with markers are shown in Fig.~\ref{f:CoopFog}.
+
+
+
+\begin{figure}
+\begin{center}
+\includegraphics[width=0.60\textwidth]{img/MASnetPose}
+  \end{center}
+\caption{The MAS-net testbed.\label{f:masnetpic}}
+\end{figure}
+
+
+The pictures in Fig.~\ref{f:CoopFog} are captured from our movie~\cite{ChenSongMASnetMovie}.
+ The movie is merged from two video streams. A video from camcorder (bottom left) is overlapped on a video (background) from the GUI of the ICS. This movie demonstrates simple collaborative fog estimation.
+    In this demo, a white paper board is used to simulate the fog because it is static and it is easy to verify the correctness of robots' behaviors. Once they enter the ``foggy'' area, the robots should wander inside the area and report the simulated fog concentration to the ICS on the based station. Those dots on the screen are the augmented reality images that present the concentration of the ``fog.'' After the first robot found a plum large enough, it sends a ``help me'' message to the other robots and guide them into the area with fog.
+
+
+\begin{figure}
+\centering
+ \subfigure[Start]{
+  \includegraphics[%
+  width=0.43\textwidth,
+  keepaspectratio]{img/UCBmovie1}}
+    \subfigure[One robot is estimating the concentration.]{\includegraphics[%
+  width=0.43\textwidth,
+  keepaspectratio]{img/UCBmovie2}}
+\subfigure[The other robot is called for help.]{\includegraphics[%
+  width=0.43\textwidth,
+  keepaspectratio]{img/UCBmovie3}}
+\caption{Cooperative fog estimation.\label{f:CoopFog}}
+\end{figure}
+
+In Chapter~\ref{s:MasnetIROS}, a problem motivated by the MAS-net project is discussed. Given several differentially driven robots, how to determine the optimal trajectories, such that the observation on the parameters of a diffusion fog is optimized? Since the fog is a distributed parameter system (DPS) and modeled by partial differential equations, mathematically speaking, the problem is as the follows: Find an optimal control law for sensors with nonholonomic constraints to observe parameters of a DPS. A numerical method is proposed and studied in Chapter~\ref{s:MasnetIROS}.
+
+
+
+\subsection{Scenarios of Sensor Selection}
+Chapter~\ref{s:COSS} focuses on the sensor selection problem. As aforementioned, energy conservation is a key issue for WSNs. When WSNs are involved in real-time observation tasks, such as environment monitoring or target tracking, some sensors must stay in active mode and submit their measurements to the sink (base station) periodically. Of course, the less number of selected sensors the better, provided the observation error is small enough. The problem of sensor selection is to choose the proper sensors and just enough number of sensors such that high precision estimation is achieved with the least energy costs.
+
+
+In WSN applications such as building automation, an event
+of interest could be a fire in some area of a building; it could also be the leakage of toxic gases in certain
+region. However, the exact location at which such an
+event takes place is not known. Moreover, the sensors in the
+vicinity of the event in question measure physical parameters
+like temperature, but they may not by themselves establish
+the location of the event. It is even possible that no physical sensor could measure the event's location directly.
+Thus, in order to take any actuating
+action like turning on the sprinklers, it is first required to
+accurately establish the location of the event. The location
+of the event is thus an unknown quantity that should be
+estimated based on sensor data.
+% This problem is the classical sensor fusion problem.
+
+
+    Once an event in question is detected by one or more sensor
+nodes and its location is established, the sensors communicate
+their measured readings to a sink to facilitate actuating actions.
+However, in order to conserve the limited energy budget on
+each sensor node, and also to optimally utilize limited radio
+bandwidth, it is not efficient to have every sensor that detected
+the event to communicate its readings at the maximum possible
+transmission rate. This will result in not only rapid depletion of
+on-board battery power on each node, but also lead to severe
+network congestion resulting in loss of valuable communication packets pertaining to the event. Intuitively, data from assigning
+a high transmission rate to a sensor far away from the
+fire fetches only limited information. Those samples have more noise and the quality of the information is not satisfied. It
+is wise to increase the transmission rate for those sensors that
+are closer to the fire, since they can provide ``good'' data.
+
+
+     The sensors with high transmission rates are selected and those with low transmission rates are called unselected.
+The sensors that are far from the fire should not be selected. This does not mean that every sensor
+that is ``close,'' e.g., within some threshold distance, to the
+event in question is guaranteed to be selected. We need a
+systematic, analytic approach to select sensors. In fact, the results in Chapter~\ref{s:COSS} indicate that the closest sensors are not always selected. It is also proved in the chapter that only a small number of sensors are required to be selected in order to achieve the optimal precision. Those conclusions may be counter intuitive. The detailed analysis and experiment results are presented in Chapter~\ref{s:COSS}.
+
+
+
+%\subsubsection{Scenarios of Localization Applications}
+%\subsubsection{Simple Sensor Selection for Event Estimation}
+%\subsubsection{Sensor Selection for Target Tracking Scenarios}
+\subsection{Scenario for WSN-based Localization}
+Localization is a fundamental function for WSNs~\cite{NicuLocalAdHoc}, as well as many other applications, such as mobile robots~\cite{Borenstein96WhereAmIWeb,Thrun00e}, navigation~\cite{CheungLSTOA04}, etc.
+
+
+Currently, global positioning system (GPS) probability is well known localization technology the public. Despite of the achievements of GPS, the GPS is not ideal or available for many applications. For example, GPS signals may be blocked by buildings, heavy foliage, large metal objects or strong electrical field~\cite{NiculescuAPSAoAInfocom03}. In addition, the costs and energy requirements of GPS receivers may be not acceptable for some applications~\cite{PawariLocatingTheNodes05}.
+    GPS is not available for indoor localization, since the satellite signals of the GPS system are blocked by building structures.   For outdoor application, although GPS is an option, it is mainly complimentary to the WSN-based localization systems rather than competitive. In typically WSN deployments, a large number of sensor nodes should be equipped with low-cost, energy efficient localization devices that designed for WSNs ~\cite{White_Paper_nanoNET-2,AetherExecutiveSummary96}. The GPS equipments are only installed on several beacon nodes (anchor nodes) to provide global positions.
+
+
+Comparing to the localization technologies for robotics and navigation, the WSN-based localization is different. Common sensors used for robot localization and navigation, such as sonar or laser scanners, are too costly for WSNs, in terms of money, energy cost and physical size.
+
+
+Although the importance of WSN-based localization has be recognized, and active research has been conducted for years, the technology is still not matured in the sense that no out-of-the-shelf WSN localization systems are available today. As a brief summary, we list the unique constraints or challenges of the WSN localization problem.
+
+\begin{itemize}
+  \item To fit into the strategy of the WSNs, the localization hardware for sensor nodes must be portable, low cost, energy efficient and precise enough. So far, no commercial hardware solution satisfies all those requirements.
+  \item Since the sensor nodes are commonly deployed in ad hoc approaches, the rough estimates on the positions of the sensor nodes may not be available. If the localization algorithm is based on the common least squares (LS) approach, the position estimates may not converge to the real values, since the randomly generated initial positions may not be close enough to the global minimum, which is the true value of the sensor's position~\cite{p188-biswas}.
+    In addition, since both of the sensor nodes (whose positions are unknown) and the beacon nodes (whose positions are known) may be placed in ad hoc manners, the positioning on some sensor node may be ambiguous since not enough beacons' signals may be received~\cite{NiculescuPhD}.
+  \item It is common to progressively deploy the beacon nodes. If the batteries on certain beacons are depleted or the positioning errors are not satisfied, more beacon nodes should be added.
+    In fact, adaptive progressive beacon placement is discussed under the context of WSN~\cite{bulusu01adaptive}.
+  \item Some sensor nodes in a WSN may be mobile. This is yet another challenge for localization.
+  \item Multi-hop is common for WSNs. A beacon node may not be able to directly communicate with a sensor node. Some WSN localization methods, e.g., the DV-hop algorithm~\cite{bulusu01adaptive}, locate sensors by sensor networks with multi-hops.
+\end{itemize}
+
+
+\section{Summary of Dissertation Contributions}
+In the dissertation, several WSN problems are unified under the  framework of optimal experimental design. The essential contributions are as the follows:
+\begin{itemize}
+  \item Propose a numerical method to optimize the trajectories of mobile sensor nodes to estimate parameters of DPSs.
+  \item Propose a sensor selection method to select the minimum number of sensors with the least communication energy costs for the optimal parameter estimation.
+  \item Prove the existence of a class of implicit optimal sensor selection methods. The proof also provides guidance on the design of future sensor selection methods as well as the parameter tuning of those methods.
+  \item The robustness and performances of the sensor selection algorithm have be verified by extensive hardware experiments and simulations.
+  \item Propose an asynchronous time difference of arrival (TDOA) localization method for energy efficient localization by WSNs.
+  \item Based on the TDOA method, develop a method to optimize the beacon placement for robust localization.
+\end{itemize}
+
+\section{Dissertation Organization}
+The organization of the dissertation is as the follows. The mobile sensor trajectory optimization problem is discussed in Chapter~\ref{s:MasnetIROS}, based on the context of MAS-net project. Chapter~\ref{s:COSS} focuses on the sensor selection problem. Chapter~\ref{s:loc} presents the research on localization and beacon placement problems. Chapter~\ref{s:dissConclusion} concludes the dissertation. Finally, notations and some comments on the implementations are presented in the Appendices.

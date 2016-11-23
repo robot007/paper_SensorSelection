@@ -1,0 +1,56 @@
+1 for LampNoCapModel20210x-05.fig
+
+General model:
+       f(x) = a*x^(-0.5)
+Coefficients (with 95% confidence bounds):
+       a =  2.021e+004  (1.896e+004, 2.146e+004)
+
+Goodness of fit:
+  SSE: 4.127e+006
+  R-square: 0.8983
+  Adjusted R-square: 0.8983
+  RMSE: 563.4
+
+2 for LampNoCapModel2.fig
+
+General model:
+       f(x) = a*x^(-0.5)+b
+Coefficients (with 95% confidence bounds):
+       a =  1.836e+004  (1.585e+004, 2.088e+004)
+       b =       366.9  (-290.2, 1024)
+
+Goodness of fit:
+  SSE: 3.992e+006
+  R-square: 0.9016
+  Adjusted R-square: 0.8934
+  RMSE: 576.8
+
+3 For LampNoCapModel3.fig
+
+General model Power2:
+       f(x) = a*x^b+c
+Coefficients (with 95% confidence bounds):
+       a =  2.125e+004  (1.284e+004, 2.966e+004)
+       b =     -0.6069  (-1.544, 0.3306)
+       c =       971.7  (-2957, 4901)
+
+Goodness of fit:
+  SSE: 1.888e+007
+  R-square: 0.5349
+  Adjusted R-square: 0.4503
+  RMSE: 1310
+
+4 For LampNoCapModel4.fig
+
+General model Gauss1:
+       f(x) =  a1*exp(-((x-b1)/c1)^2)
+Coefficients (with 95% confidence bounds):
+       a1 =        6000  (fixed at bound)
+       b1 =   2.22e-014  (fixed at bound)
+       c1 =        71.8  (50.35, 93.26)
+
+Goodness of fit:
+  SSE: 2.196e+007
+  R-square: 0.4588
+  Adjusted R-square: 0.4588
+  RMSE: 1300

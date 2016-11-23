@@ -1,0 +1,183 @@
+Microsoft Visual Studio Solution File, Format Version 9.00
+# Visual Studio 2005
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataAcquisitionService", "DataAcquisitionService.csproj", "{DF120705-84DF-47D7-A961-7EBB646852CD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebLibrary", "..\..\HermesMiddleware\WebLibrary\WebLibrary.csproj", "{4226246D-45C7-4B45-97A0-0598F5D27385}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommonLibrary", "..\..\HermesMiddleware\CommonLibrary\CommonLibrary.csproj", "{1567D321-594F-4745-BE21-89DDFC09BEF6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoteLibrary", "..\..\HermesMiddleware\MoteLibrary\MoteLibrary.csproj", "{E86F7337-E0C6-41CB-9261-A62E3711E4A6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DBLibrary", "..\..\HermesMiddleware\DBLibrary\DBLibrary.csproj", "{9D27CA87-19D3-4ADB-850F-B46E3294BA43}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GUILibrary", "..\..\HermesMiddleware\GUILibrary\GUILibrary.csproj", "{5F8CED5E-786A-424F-B86C-3198CEF13B07}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataAcquisitionLib", "..\..\HermesMiddleware\DataAcquisitionLib\DataAcquisitionLib.csproj", "{34478AB7-EB8A-4122-8070-F9FCB9495C2E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CameraLibrary", "..\..\HermesMiddleware\CameraLibrary\CameraLibrary.csproj", "{2EE6DAF3-5E66-48EF-A1DB-373BF5AB067D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoteLocalization", "..\..\..\Documents and Settings\michael\My Documents\Visual Studio 2005\Projects\WorkflowOptimizer\MoteLocalization\MoteLocalization.csproj", "{69C5DD94-2C1B-443D-A7A7-F3EB9229FA3F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GraphLibrary", "..\..\..\Documents and Settings\michael\My Documents\Visual Studio 2005\Projects\WorkflowOptimizer\GraphLibrary\GraphLibrary.csproj", "{59DFE4CA-E7EA-48C7-A180-33FDD1C0CB45}"
+EndProject
+Global
+	GlobalSection(SourceCodeControl) = preSolution
+		SccNumberOfProjects = 11
+		SccProjectName0 = \u0022$/SensorDataAcquisitionPlatform/DataAcquisitionService\u0022,\u0020TSAAAAAA
+		SccLocalPath0 = .
+		SccProvider0 = MSSCCI:Microsoft\u0020Visual\u0020SourceSafe
+		CanCheckoutShared = true
+		SccProjectUniqueName1 = DataAcquisitionService.csproj
+		SccLocalPath1 = .
+		CanCheckoutShared = true
+		SccProjectUniqueName2 = ..\\..\\HermesMiddleware\\WebLibrary\\WebLibrary.csproj
+		SccProjectName2 = \u0022$/HermesMiddleware/WebLibrary\u0022,\u0020NWAAAAAA
+		SccLocalPath2 = ..\\..\\HermesMiddleware\\WebLibrary
+		CanCheckoutShared = true
+		SccProjectUniqueName3 = ..\\..\\HermesMiddleware\\CommonLibrary\\CommonLibrary.csproj
+		SccProjectName3 = \u0022$/HermesMiddleware/CommonLibrary\u0022,\u0020CUAAAAAA
+		SccLocalPath3 = ..\\..\\HermesMiddleware\\CommonLibrary
+		CanCheckoutShared = true
+		SccProjectUniqueName4 = ..\\..\\HermesMiddleware\\MoteLibrary\\MoteLibrary.csproj
+		SccProjectName4 = \u0022$/HermesMiddleware/MoteLibrary\u0022,\u0020LHBAAAAA
+		SccLocalPath4 = ..\\..\\HermesMiddleware\\MoteLibrary
+		CanCheckoutShared = true
+		SccProjectUniqueName5 = ..\\..\\HermesMiddleware\\DBLibrary\\DBLibrary.csproj
+		SccProjectName5 = \u0022$/HermesMiddleware/DBLibrary\u0022,\u0020UQAAAAAA
+		SccLocalPath5 = ..\\..\\HermesMiddleware\\DBLibrary
+		CanCheckoutShared = true
+		SccProjectUniqueName6 = ..\\..\\HermesMiddleware\\GUILibrary\\GUILibrary.csproj
+		SccProjectName6 = \u0022$/HermesMiddleware/GUILibrary\u0022,\u0020ERAAAAAA
+		SccLocalPath6 = ..\\..\\HermesMiddleware\\GUILibrary
+		CanCheckoutShared = true
+		SccProjectUniqueName7 = ..\\..\\HermesMiddleware\\DataAcquisitionLib\\DataAcquisitionLib.csproj
+		SccProjectName7 = \u0022$/HermesMiddleware/DataAcquisitionLib\u0022,\u0020VIDAAAAA
+		SccLocalPath7 = ..\\..\\HermesMiddleware\\DataAcquisitionLib
+		CanCheckoutShared = true
+		SccProjectUniqueName8 = ..\\..\\HermesMiddleware\\CameraLibrary\\CameraLibrary.csproj
+		SccProjectName8 = \u0022$/HermesMiddleware/CameraLibrary\u0022,\u0020WEFAAAAA
+		SccLocalPath8 = ..\\..\\HermesMiddleware\\CameraLibrary
+		CanCheckoutShared = true
+		SccProjectUniqueName9 = ..\\..\\..\\Documents\u0020and\u0020Settings\\michael\\My\u0020Documents\\Visual\u0020Studio\u00202005\\Projects\\WorkflowOptimizer\\MoteLocalization\\MoteLocalization.csproj
+		SccProjectName9 = \u0022$/WorkflowOptimizer/WorkflowOptimizer/MoteLocalization\u0022,\u0020CFFAAAAA
+		SccLocalPath9 = ..\\..\\..\\Documents\u0020and\u0020Settings\\michael\\My\u0020Documents\\Visual\u0020Studio\u00202005\\Projects\\WorkflowOptimizer\\MoteLocalization
+		CanCheckoutShared = true
+		SccProjectUniqueName10 = ..\\..\\..\\Documents\u0020and\u0020Settings\\michael\\My\u0020Documents\\Visual\u0020Studio\u00202005\\Projects\\WorkflowOptimizer\\GraphLibrary\\GraphLibrary.csproj
+		SccProjectName10 = \u0022$/WorkflowOptimizer/WorkflowOptimizer/GraphLibrary\u0022,\u0020CAFAAAAA
+		SccLocalPath10 = ..\\..\\..\\Documents\u0020and\u0020Settings\\michael\\My\u0020Documents\\Visual\u0020Studio\u00202005\\Projects\\WorkflowOptimizer\\GraphLibrary
+		CanCheckoutShared = true
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|Mixed Platforms = Debug|Mixed Platforms
+		Debug|Win32 = Debug|Win32
+		Release|Any CPU = Release|Any CPU
+		Release|Mixed Platforms = Release|Mixed Platforms
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DF120705-84DF-47D7-A961-7EBB646852CD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DF120705-84DF-47D7-A961-7EBB646852CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DF120705-84DF-47D7-A961-7EBB646852CD}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{DF120705-84DF-47D7-A961-7EBB646852CD}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{DF120705-84DF-47D7-A961-7EBB646852CD}.Debug|Win32.ActiveCfg = Debug|Any CPU
+		{DF120705-84DF-47D7-A961-7EBB646852CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DF120705-84DF-47D7-A961-7EBB646852CD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DF120705-84DF-47D7-A961-7EBB646852CD}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{DF120705-84DF-47D7-A961-7EBB646852CD}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{DF120705-84DF-47D7-A961-7EBB646852CD}.Release|Win32.ActiveCfg = Release|Any CPU
+		{4226246D-45C7-4B45-97A0-0598F5D27385}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4226246D-45C7-4B45-97A0-0598F5D27385}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4226246D-45C7-4B45-97A0-0598F5D27385}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{4226246D-45C7-4B45-97A0-0598F5D27385}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{4226246D-45C7-4B45-97A0-0598F5D27385}.Debug|Win32.ActiveCfg = Debug|Any CPU
+		{4226246D-45C7-4B45-97A0-0598F5D27385}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4226246D-45C7-4B45-97A0-0598F5D27385}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4226246D-45C7-4B45-97A0-0598F5D27385}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{4226246D-45C7-4B45-97A0-0598F5D27385}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{4226246D-45C7-4B45-97A0-0598F5D27385}.Release|Win32.ActiveCfg = Release|Any CPU
+		{1567D321-594F-4745-BE21-89DDFC09BEF6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1567D321-594F-4745-BE21-89DDFC09BEF6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1567D321-594F-4745-BE21-89DDFC09BEF6}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{1567D321-594F-4745-BE21-89DDFC09BEF6}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{1567D321-594F-4745-BE21-89DDFC09BEF6}.Debug|Win32.ActiveCfg = Debug|Any CPU
+		{1567D321-594F-4745-BE21-89DDFC09BEF6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1567D321-594F-4745-BE21-89DDFC09BEF6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1567D321-594F-4745-BE21-89DDFC09BEF6}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{1567D321-594F-4745-BE21-89DDFC09BEF6}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{1567D321-594F-4745-BE21-89DDFC09BEF6}.Release|Win32.ActiveCfg = Release|Any CPU
+		{E86F7337-E0C6-41CB-9261-A62E3711E4A6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E86F7337-E0C6-41CB-9261-A62E3711E4A6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E86F7337-E0C6-41CB-9261-A62E3711E4A6}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{E86F7337-E0C6-41CB-9261-A62E3711E4A6}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{E86F7337-E0C6-41CB-9261-A62E3711E4A6}.Debug|Win32.ActiveCfg = Debug|Any CPU
+		{E86F7337-E0C6-41CB-9261-A62E3711E4A6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E86F7337-E0C6-41CB-9261-A62E3711E4A6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E86F7337-E0C6-41CB-9261-A62E3711E4A6}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{E86F7337-E0C6-41CB-9261-A62E3711E4A6}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{E86F7337-E0C6-41CB-9261-A62E3711E4A6}.Release|Win32.ActiveCfg = Release|Any CPU
+		{9D27CA87-19D3-4ADB-850F-B46E3294BA43}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9D27CA87-19D3-4ADB-850F-B46E3294BA43}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9D27CA87-19D3-4ADB-850F-B46E3294BA43}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{9D27CA87-19D3-4ADB-850F-B46E3294BA43}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{9D27CA87-19D3-4ADB-850F-B46E3294BA43}.Debug|Win32.ActiveCfg = Debug|Any CPU
+		{9D27CA87-19D3-4ADB-850F-B46E3294BA43}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9D27CA87-19D3-4ADB-850F-B46E3294BA43}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9D27CA87-19D3-4ADB-850F-B46E3294BA43}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{9D27CA87-19D3-4ADB-850F-B46E3294BA43}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{9D27CA87-19D3-4ADB-850F-B46E3294BA43}.Release|Win32.ActiveCfg = Release|Any CPU
+		{5F8CED5E-786A-424F-B86C-3198CEF13B07}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5F8CED5E-786A-424F-B86C-3198CEF13B07}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5F8CED5E-786A-424F-B86C-3198CEF13B07}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{5F8CED5E-786A-424F-B86C-3198CEF13B07}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{5F8CED5E-786A-424F-B86C-3198CEF13B07}.Debug|Win32.ActiveCfg = Debug|Any CPU
+		{5F8CED5E-786A-424F-B86C-3198CEF13B07}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5F8CED5E-786A-424F-B86C-3198CEF13B07}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5F8CED5E-786A-424F-B86C-3198CEF13B07}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{5F8CED5E-786A-424F-B86C-3198CEF13B07}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{5F8CED5E-786A-424F-B86C-3198CEF13B07}.Release|Win32.ActiveCfg = Release|Any CPU
+		{34478AB7-EB8A-4122-8070-F9FCB9495C2E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{34478AB7-EB8A-4122-8070-F9FCB9495C2E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{34478AB7-EB8A-4122-8070-F9FCB9495C2E}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{34478AB7-EB8A-4122-8070-F9FCB9495C2E}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{34478AB7-EB8A-4122-8070-F9FCB9495C2E}.Debug|Win32.ActiveCfg = Debug|Any CPU
+		{34478AB7-EB8A-4122-8070-F9FCB9495C2E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{34478AB7-EB8A-4122-8070-F9FCB9495C2E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{34478AB7-EB8A-4122-8070-F9FCB9495C2E}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{34478AB7-EB8A-4122-8070-F9FCB9495C2E}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{34478AB7-EB8A-4122-8070-F9FCB9495C2E}.Release|Win32.ActiveCfg = Release|Any CPU
+		{2EE6DAF3-5E66-48EF-A1DB-373BF5AB067D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2EE6DAF3-5E66-48EF-A1DB-373BF5AB067D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2EE6DAF3-5E66-48EF-A1DB-373BF5AB067D}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{2EE6DAF3-5E66-48EF-A1DB-373BF5AB067D}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{2EE6DAF3-5E66-48EF-A1DB-373BF5AB067D}.Debug|Win32.ActiveCfg = Debug|Any CPU
+		{2EE6DAF3-5E66-48EF-A1DB-373BF5AB067D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2EE6DAF3-5E66-48EF-A1DB-373BF5AB067D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2EE6DAF3-5E66-48EF-A1DB-373BF5AB067D}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{2EE6DAF3-5E66-48EF-A1DB-373BF5AB067D}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{2EE6DAF3-5E66-48EF-A1DB-373BF5AB067D}.Release|Win32.ActiveCfg = Release|Any CPU
+		{69C5DD94-2C1B-443D-A7A7-F3EB9229FA3F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{69C5DD94-2C1B-443D-A7A7-F3EB9229FA3F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{69C5DD94-2C1B-443D-A7A7-F3EB9229FA3F}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{69C5DD94-2C1B-443D-A7A7-F3EB9229FA3F}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{69C5DD94-2C1B-443D-A7A7-F3EB9229FA3F}.Debug|Win32.ActiveCfg = Debug|Any CPU
+		{69C5DD94-2C1B-443D-A7A7-F3EB9229FA3F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{69C5DD94-2C1B-443D-A7A7-F3EB9229FA3F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{69C5DD94-2C1B-443D-A7A7-F3EB9229FA3F}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{69C5DD94-2C1B-443D-A7A7-F3EB9229FA3F}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{69C5DD94-2C1B-443D-A7A7-F3EB9229FA3F}.Release|Win32.ActiveCfg = Release|Any CPU
+		{59DFE4CA-E7EA-48C7-A180-33FDD1C0CB45}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{59DFE4CA-E7EA-48C7-A180-33FDD1C0CB45}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{59DFE4CA-E7EA-48C7-A180-33FDD1C0CB45}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{59DFE4CA-E7EA-48C7-A180-33FDD1C0CB45}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{59DFE4CA-E7EA-48C7-A180-33FDD1C0CB45}.Debug|Win32.ActiveCfg = Debug|Any CPU
+		{59DFE4CA-E7EA-48C7-A180-33FDD1C0CB45}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{59DFE4CA-E7EA-48C7-A180-33FDD1C0CB45}.Release|Any CPU.Build.0 = Release|Any CPU
+		{59DFE4CA-E7EA-48C7-A180-33FDD1C0CB45}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{59DFE4CA-E7EA-48C7-A180-33FDD1C0CB45}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{59DFE4CA-E7EA-48C7-A180-33FDD1C0CB45}.Release|Win32.ActiveCfg = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

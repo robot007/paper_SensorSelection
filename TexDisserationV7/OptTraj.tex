@@ -1,0 +1,577 @@
+\chapter{Mobile Sensor Trajectory Optimization for Distributed Parameter System Identification}~\label{s:MasnetIROS}
+\section{Motivation and the Application Scenario}
+Thanks to the advances of the technologies, large scale WSNs or mobile WSNs are more affordable. Different applications could take different advantages of  WSNs. For WSNs used for monitoring lumped parameter systems, such as an electrical motors, the large number of sensors introduce redundance for the measurement, thus enhance the robustness to faulty sensors.
+    However, this is not the only application scenario of WSNs. There exists a wide class of processes whose behaviors are described by Partial Differential Equations (PDEs) due to the inherent spatial and temporal variabilities of their states. They are commonly termed the Distributed Parameter Systems (DPSs). Since a DPS has infinite number of states, large scale WSNs may provide fine grid estimates with better precision as comparing to the traditional wired sensing systems, which are normally in much smaller scale due to the difficulties of wired connections. These scenarios may result to many useful applications of WSNs as the follows:
+
+\begin{enumerate}
+\item Wild fire monitoring~\cite{DoolinaFirebugSPIE05}.
+\item Landslide prediction~\cite{MooreLandslide}.
+\item Volcano status monitoring~\cite{Werner-Allen2006}.
+\item Diffusive pollution monitoring and control~\cite{MASnetSPIE04ZoneControl, masnetspie04pathplan}.
+\item Water pollution monitoring~\cite{OgrenCooperativeControl}.
+\item Chemical plume tracking~\cite{SpearPlum04}.
+\end{enumerate}
+
+
+
+\section{System Identification for DPS}~\label{s:sid}
+Currently, DPS occupies an important place in control and systems theories ~\cite{Christofides2001,CurtainZwart1995, Lasiecka2000, Neittaanmaki1994, Omatu1989, Zwart1997}.
+One of the basic and most important questions in DPSs is parameter estimation, which refers to the determination from observed data of unknown parameters in the system model such that the predicted response of the model is close, in some well-defined sense, to the process observations. For that purpose, the system behavior or response is observed with the aid of some suitable collection of discrete sensors, which reside at predefined spatial locations.
+    However, the resulting measurements are incomplete in the sense that the entire spatial state profile is not available. Moreover, the measurements are inexact by virtue of inherent errors of measurement associated with transducing elements and also because of the measurement environment. These factors lead to the question of where to locate sensors so that the information content of the resulting outputs with respect to the distributed state and PDE model be as high as possible.
+
+
+    It is widely accepted that making use of sensors placed in an ``intelligent'' manner may lead to dramatic gains in the achievable accuracy of the resulting parameter estimates, so efficient sensor location strategies are highly desirable. In turn, the complexity of the sensor location problem implies that there are a very few sensor placement methods, which are readily applicable to practical situations. What is more, they are not well known among researchers. This generates a keen interest in the potential results, as the motivations to study the sensor location problem stem from practical engineering issues. Optimization of air quality monitoring networks is among the most interesting ones. One of the tasks of environmental protection systems is to provide expected levels of pollutant concentrations.
+        To produce such a forecast, a smog prediction model is necessary, which is usually chosen in the form of an advection-diffusion partial-differential equation. As more sensor measurements un-avoidably introduce more energy costs and hereby increase the maintenance budget, we are faced with the problem of how to optimize their locations to obtain the most precise model with a limited number of sensors. Other stimulating applications include, among other things,
+groundwater modeling, recovery of valuable minerals and hydrocarbon from underground permeable reservoirs, gathering measurement data for calibration of mathematical models used in meteorology and oceanography, automated inspection in static and active hazardous
+environments where the trial-and-error sensor planning cannot be used (e.g. in nuclear power plants), or emerging smart material systems.
+
+
+The sensor placement problem was attacked from various angles, but the results communicated by most authors are limited to the selection of stationary sensor positions~\cite{Kubrusly1985, Ucinski2000, UcinskiOptDPS05}. An intuitively clear generalization is to apply sensors, which are capable of continuously tracking points providing at a given time moment best information about the parameters (such a strategy is usually called continuous scanning). However, communications in this field are rather limited. \cite{Rafajlowicz1986} considers the determinant of the Fisher Information Matrix (FIM) associated with the parameters to be estimated as a measure of the identification accuracy and looks for an optimal time-dependent measure, rather than for the trajectories themselves.
+% On the other hand, Uci\'{n}ski~\cite{Ucinski2001, UcinskiOptDPS05, Ucinski1999} apart from generalizations of Rafaj{\l}wicz's results, develops some computational algorithms based on the FIM.
+    The work~\cite{UcinskiTimeOpt2005} was intended as an attempt to properly formulate and solve the time-optimal problem for moving sensors, which observe the state of a DPS so as to estimate some of its parameters. Note that the idea of moving observations has also been applied in the context of state estimation~\cite{CarotenutoMobileSensorDPS, Khapalov1992, Nakano1981, Nakano1988}, but those results can hardly be exploited in the framework considered here as those authors make extensive use of some specific features of the addressed problem (e.g. the linear dependence of the current state on the initial state for linear systems).
+
+
+It should be emphasized that technological advances in communication systems and the growing ease in making small, low power and inexpensive mobile systems now make it feasible to deploy a group of networked vehicles in a number of environments~\cite{CarotenutoMobileSensorDPS, ChongSensornet, MartinezBullo2006, OgrenCooperativeControl, SinopoliDist}. A cooperated and scalable network of vehicles, each of them equipped with a single sensor, has the potential to substantially improve the performance of the observation systems. Applications in various fields of research are being developed and interesting ongoing projects include extensive experimentation based on testbeds. The problem to be discussed in this paper caught our attention while working
+on our MAS-net experimental platforms~\cite{MooreChen04,MASnetSPIE04ZoneControl,masnetspie04pathplan, ZhongminRobio04, PchenMS, AnishaMS}.
+% namely the MAS-net testbed being a distributed system equipped with two-wheeled differentially driven mobile robots capable of sensing the states of DPSs described by diffusion equations~\cite{MooreChen04,MASnetSPIE04ZoneControl,masnetspie04pathplan, ZhongminRobio04, PchenMS, AnishaMS}.
+
+
+The MAS-net project is proposed to combine the latest sensor network technologies with mobile robotics for an application-oriented high-level task, namely, characterization, estimation and control of an undesired diffusion process by networked mobile actuators and sensors. One potential solution is to estimate the parameters in a ``closed-loop'' or ``on-line'' approach, as mentioned in the last chapter of~\cite{Patan2004}. This idea can be explained as follows. With arbitrary initial values of the unknown parameters, the system starts to drive sensors in an ``optimal'' trajectory with respect to those parameters. Sensor data are then collected while the sensors are moving.
+    On the basis of the collected data, parameter estimates are improved and the moving sensor trajectories are then updated accordingly. Then, the sensors are driven to follow the newly updated trajectories based on the parameters estimated. Through this ``closed-loop'' iteration or the recursive online adaptation, the estimated parameters converge to the true values of the DPS. This so-called ``online'' mode was listed as one of the important future research efforts.
+
+
+% From the control system perspective, the trajectory scheduling procedure can be called ``control for sensing,'' and the parameter updating procedure is ``sensing for control.'' When these two parts are connected with an ``online'' or ``recursive'' strategy, the whole system is a closed-loop controlled system. Control theory can then be applied to improve the performances. Currently, it is still an open problem of how to ``close'' the loop of this system.
+
+
+In this paper, we focus on the ``control for sensing'' part, that is, given an estimate of the DPS parameters, how to drive the mobile sensors optimally in the sense that the effect of the sensor noise can be minimized. We present a numerical solution for a mobile sensor motion trajectory scheduling problem under non-holonomic constraints as in MASmotes~\cite{ZhongminRobio04}, the two-wheeled differentially-driven mobile robots, in our MAS-net project.
+More details of the project is presented in Chapter~\ref{s:intro}.
+
+    From the theoretical aspect, the key challenge of the project is to develop real-time parameter estimation and state estimation of a class of distributed parameter systems (DPSs) by a swarm of mobile sensors with nonholonomic constraints and limited communication capability. In addition, mobile actuators  (e.g., a mobile robot equipped with a chemical neutralizer dispenser) with the same nonholonomic constraints will be added to control the DPS (basically, to reduce the concentration) with the help of the mobile sensors.
+
+
+%%%%%%%%%%%%%%%
+While observing a DPS, it is most often impossible to measure the system states over an entire spatial domain, and therefore the problem of where to locate  the measurement sensors becomes very important.
+    It is not trivial to estimate the parameters or the states of the DPS by a limited number of sensors. The study of the DPS identification problem started about 40 years ago, but the number of papers that discussed the sensor-motion-scheduling problem is still limited. Many of them discussed the optimal-placement problem for static sensors.
+
+%   Some researchers discussed state estimation~\cite{KubruslySensor85, ElJaiDistributed91, KorbiczSensors94}, some focused on parameter identification~\cite{RafajlowiczDesign78,Quereshi80,RafajlowiczOpt83}, some addressed both simultaneously~\cite{KubruslySensor85}.
+
+%%%%%%%%%%%%%%%
+    The model-based adaptive measurement and control problem of the MAS-net project is formulated in~\cite{MASnetSPIE04ZoneControl,masnetspie04pathplan}. To implement this distributed control system, the parameter estimation for the DPS is required, and the choice of best experimental conditions for that purpose is referred to as an ``optimum experimental design'' problem as discussed in~\cite{MehraOED76,MullerOptimumDesign,RafajlowiczDesign78,Jaibook88}.
+
+    The recent publications~\cite{UcinskiOptDPS05,Patan2004} are closely related to the MAS-net estimation problem. In \cite{UcinskiOptDPS05,Patan2004}, the dynamic-sensor-motion scheduling problem is studied intensively with many practical considerations such as robust design, collision avoidance, etc.
+
+%    \subsection{Motivation for Mobile Sensors}~\label{s:motivation}
+% For distributed parameter system identification, using a group of movable sensors for measurement has obvious advantages \cite{UcinskiOptDPS05}. However, as also pointed out in \cite{UcinskiOptDPS05,Patan2004}, there exists a fundamental problem for the DPS-parameter estimation: the optimal sensor locations for the DPS-parameter estimation depend on those unknown parameters to be identified.
+%    In \cite{UcinskiOptDPS05}, this ``chicken-and-egg'' problem is described as ``{\it if you tell me the parameters of a DPS, I promise to design an experiment to measure them optimally.}''
+
+%   One of the solutions to this problem is to design robust sensor trajactory/placement scheduling schemes which are not sensitive to the unknown parameters, such as~\cite{UcinskiRob99} and Chapter 6 of~\cite{UcinskiOptDPS05}.
+
+%    One potential solution is to estimate the parameters in a ``closed-loop'' or `on-line'', or a ``recursive'' approach, as mentioned in the last chapter of ~\cite{Patan2004}. This idea can be explained as follows.
+%    With arbitrary initial values of the unknown parameters, the system starts to drive sensors in an ``optimal'' trajectory with respect to those parameters. Sensor data are then collected while the sensors are moving.
+%    Based on the collected data, parameter estimates are improved and the  moving sensor trajectories are then updated accordingly.
+%    Then, the sensors are driven to follow the newly updated trajectories based on the parameters estimated. Through this ``closed-loop'' iteration or the recursive on-line adaptation,  the estimated parameters converge to the true values of the DPS. This  so-called ``online'' mode was listed as one of the important future research efforts.
+
+%    From the control system perspective, the trajectory scheduling procedure can be called ``control for sensing,'' and the parameter updating procedure is ``sensing for control.'' When these two parts are connected with an ``online'' or ``recursive'' strategy, the whole system is a closed-loop controlled system. Control theory can then be applied to improve the performances. Currently, it is still an open problem of how to ``close'' the loop of this system.
+
+%    In this paper, in the vein of \cite{UcinskiOptDPS05,Patan2004}, we focus on     the ``control for sensing'' part, that is, given an estimate of the DPS parameters, how to drive the mobile sensors optimally in the sense that the effect of the sensor noise can be minimized.
+% We present a numerical solution for a mobile sensor motion trajectory scheduling problem under nonholonomic constraints as in MASmotes \cite{ZhongminRobio04}, the two wheeled differentially-driven    mobile robots,    in our  MAS-net project \cite{MooreChen04, MASnetSPIE04ZoneControl, masnetspie04pathplan, ZhongminRobio04, PchenMS, AnishaMS}.
+
+
+    The rest of this chapter is organized as follows. The formulation of the MAS-net estimation problem is described in Section~\ref{s:prob}, in which the dynamic model for differential-drive mobile robots is presented in Section~\ref{s:dym} and the objective function for the optimal sensor motion scheduling is described in Section~\ref{s:obj}.
+    Section~\ref{s:optc} reformulates the problem in the framework of optimal control. In Section~\ref{s:sol}, a  numerical solution procedure for this problem is presented. A Matlab optimal control toolbox   RIOTS is briefly described in Section~\ref{s:riots} and
+    Section~\ref{s:together} describes a method to incorporate the Matlab PDE Toolbox~\cite{matlabpde} and the RIOTS, cf.\ Section~\ref{s:riots}.
+%Based on these knowledge, the numerical solution of the MAS-net estimation problem can be found in Sec.~\ref{s:sol}.
+Some illustrative simulation results are presented in Section~\ref{s:exp} with remarks on the obtained results. Section~\ref{s:con} concludes this chapter. Further comments on the implementation of the simulation are presented in the Appendix.
+
+
+\section{Problem Formulation of the Sensor-Motion Scheduling for Diffusion Systems}~\label{s:prob}
+   In this section, the model of our diffusion system and the model of our differential-drive robots are presented in Section~\ref{s:dym} and Section~\ref{s:mod}, respectively. After introducing a class of objective functions in Section~\ref{s:obj}, the MAS-net estimation problem is reformulated in the framework of optimal control, and ready to be solved by RIOTS.
+
+\subsection{The Dynamic Model of Differentially-Driven Robots}~\label{s:dym}
+%    Same as all mechanical systems, the differential-drive robots are subject to Newton's laws:
+%\begin{equation}\label{e:newton}
+%    F=ma.
+%\end{equation}
+%The matrix version for the above equation is
+%\begin{equation}\label{e:newtonm}
+% M(\mathbf{\theta}) \mathbf{\ddot\theta} + C(\mathbf{\theta}, \mathbf{\dot\theta}) \mathbf{\dot\theta} + N(\mathbf{\theta},\mathbf{\dot\theta}) = \mathbf{\tau},
+%\end{equation}
+%    where $\mathbf{\theta}$ is a column vector that contains the states of the mechanic system, $\mathbf{\tau}$ is the torque that applied to the system, and $M$,$C$, $N$ are coefficient matrices.
+%Strictly speaking, the control signal is PWM duty cycle that applied to the DC motors, but this paper takes $\mathbf{\tau}$ as the control signal since DC motors are linear and controllable. Given enough energy and good sensors, any trajectory of $\mathbf{\tau}$ can be tracked with small enough errors.
+
+MASmote \cite{ZhongminRobio04} is a differentially-driven ground mobile robot as illustrated in Fig.~\ref{fig:ddrive}. Its dynamic  model can be described by  (\ref{e:ddmodel}), where the symbols are defined as follows:
+\begin{itemize}
+    \item $m$: the weight of the robot.
+    \item $I$: the inertia of the robot along the $z$ axis. Note that $I$ is a scalar. In the literature, $\mathcal{M}$ can be a 3 by 3 inertia matrix of the robot. The $I$ in (\ref{e:ddmodel}) is the entry at the 3rd row and 3rd column of $\mathcal{M}$, i.e. $\mathcal{M}_{(3,3)}$.
+    \item $l$: the length of the robot's axis.
+    \item $r$: wheel radius. The left and right wheels have the same radius.
+    \item $b$: the edge length of the robot's square chassis. It is assumed that the wheels and the axis are mounted on the square chassis.
+    \item $\alpha$: the yaw angle as shown in Fig.~\ref{fig:ddrive}.
+    \item $(x,y)$: the coordinate of the center of the axis.
+    \item $\tau_l$,$\tau_r$: the torque applied on the left and right wheel, respectively.
+\end{itemize}
+
+    \begin{equation}\label{e:ddmodel}
+\begin{bmatrix}
+    m   &   0   &   0 \\
+    0   &   m   &   0 \\
+    0   &   0   &   I
+\end{bmatrix}
+\begin{bmatrix}
+    \ddot x\\
+    \ddot y\\
+    \ddot \alpha
+\end{bmatrix}
++
+\begin{bmatrix}
+    2b  &   0   &   0 \\
+    0   &   2b  &   0 \\
+    0   &   0   &   bl^2/2 \\
+\end{bmatrix}
+\begin{bmatrix}
+    \dot x \\
+    \dot y \\
+    \dot \alpha
+\end{bmatrix}
+=
+\begin{bmatrix}
+    r\cos(\alpha)   &   r\cos(\alpha) \\
+    r\sin(\alpha)   &   r\sin(\alpha) \\
+    -rl/2       &   rl/2
+\end{bmatrix}
+\begin{bmatrix}
+    \tau_l \\
+    \tau_r
+\end{bmatrix}
+    \end{equation}
+
+
+
+    \begin{figure}[h]
+%        \begin{center}
+%          \resizebox{0.33\textwidth}{!}{\input{img/DDrive2.tex}}
+%        \end{center}
+        \centering
+        \includegraphics[width=0.5\textwidth]{img/DDrive2}
+        \caption{A differentially-driven mobile robot.}
+        \label{fig:ddrive}
+    \end{figure}
+
+    In (\ref{e:ddmodel}), the mobile robot is represented in a form of  a 2nd order system.
+    % To accommodate the RIOTS, which is addressed in Sec.~\ref{s:riots}, the dynamic model needs to be formulated as the follows.
+For convenience, the corresponding state space form can be easily derived by introducing
+    $\mathbf{x}$, the extended system state vector   defined as
+$ \mathbf{x} := [x \; y \; \alpha \; \dot x \; \dot y \; \dot\alpha]^T,$
+and $\mathbf{\tau}$ is defined as
+$$\mathbf{\tau}=
+\begin{bmatrix}
+    \tau_l \\
+    \tau_r
+\end{bmatrix}.  $$
+Note that $\mathbf{x} \neq x$. $\mathbf{x}$ is the state vector, while $x$ is the robot's position on the $x$-axis.
+
+
+%To simplify the notation, of (\ref{e:dd1order}), we define matrix $A$ and $B$, with
+To have a compact notation, let us define matrix $A$ and $B$ as
+$$A :=
+    \begin{bmatrix}
+0 & 0 & 0 & 1 & 0 & 0 \\
+0 & 0 & 0 & 0 & 1 & 0 \\
+0 & 0 & 0 & 0 & 0 & 1 \\
+0 & 0 & 0 & -2b/m & 0 & 0 \\
+0 & 0 & 0 & 0 & -2b/m & 0 \\
+0 & 0 & 0 & 0 & 0 & -bl^2/(2I)
+    \end{bmatrix} ,$$
+
+and
+
+$$B:=
+\begin{bmatrix}
+    0 & 0 \\
+    0 &     0 \\
+    0 & 0 \\
+r\cos(\alpha)/m &   r\cos(\alpha)/m \\
+r\sin(\alpha)/m &   r\sin(\alpha)/m \\
+-rl/(2I)    &   rl/(2I)
+\end{bmatrix}.  $$
+Thus, the robot dynamics can be written as
+\begin{equation}\label{e:dy1}
+\mathbf{\dot x}=A \mathbf{x} + B \mathbf{\tau}.
+\end{equation}
+Note that $B$ depends on $\mathbf{x}$.
+
+
+To solve the multi-robot-motion-scheduling problems in Section~\ref{s:exp}, we need to write the dynamics of three robots as a single dynamic system. Denote the states of each robot in (\ref{e:dy1}) as $\mathbf{x}_1$, $\mathbf{x}_2$, and $\mathbf{x}_3$, respectively.
+  After defining
+    $$\mathbf{x}_T :=
+    \begin{bmatrix}
+        \mathbf{x}_1 \\
+        \mathbf{x}_2 \\
+        \mathbf{x}_3
+    \end{bmatrix},
+    %$$%
+    %$$
+    \quad
+    A_T=
+    \begin{bmatrix}
+        A_1   & 0 & 0 \\
+        0   & A_2 & 0 \\
+        0   & 0 & A_3
+    \end{bmatrix},
+    $$
+    $$B_T=
+    \begin{bmatrix}
+        B_1 & 0 & 0 \\
+        0 & B_2 & 0 \\
+        0 & 0 & B_3
+    \end{bmatrix},
+    %$$
+    {\rm \ and \ }
+   % $$
+    \mathbf{\tau}_T=
+    \begin{bmatrix}
+        \mathbf{\tau}_1 \\
+        \mathbf{\tau}_2 \\
+        \mathbf{\tau}_3
+    \end{bmatrix}, $$
+   where $A_j, B_j$ are for the $j$-th robot,  the dynamics of all three robots can be written compactly as follows:
+    \begin{equation}
+        \label{e:dd3rob}
+        \mathbf{\dot x}_T = A_T \mathbf{x}_T + B_T \mathbf{\tau}_T.
+    \end{equation}
+
+\subsection{The Model of the Diffusion Process}~\label{s:mod}
+For comparison purposes, here we use the same  diffusion system model as in  Example 4.1 in~\cite{UcinskiOptDPS05}. We rewrite it using our notation in the following form:
+\begin{eqnarray*}
+    \frac{\partial u(x,y,t)}{\partial t} &=& \frac{\partial}{\partial x}\left(\kappa(x,y) \frac{\partial u(x,y,t)}{\partial x}  \right) \cr
+    &+&   \frac{\partial }{\partial y}\left(\kappa(x,y) \frac{\partial u(x,y,t)}{\partial y} \right) \cr
+    &+& 20 \exp(-50(x-t)^2), \cr
+    & & (x,y) \in \Omega=(0,1)\times (0,1), t\in T, \cr
+    u(x,y,0) &=& 0, \;\; (x,y) \in \Omega, \cr
+    u(x,y,t) &=& 0, \;\; (x,y,t)\in \partial \Omega \times T, \cr
+    T &:=& \{t | t\in(0,1) \}, \cr
+    \kappa(x,y) &=& c_1 + c_2 x + c_3 y, \cr
+    & & c_1=0.1,\; c_2=-0.05,\; c_3=0.2,
+\end{eqnarray*}
+where $u(x,y,t)$ is the concentration, $(x,y)$ is the spatial coordinate, $c_1$, $c_2$, $c_3$ are the nominal parameters, and $t$ is the time.
+
+
+\subsection{The Objective Function for Sensor-Motion Scheduling}~\label{s:obj}
+    In this paper, the aim of the optimization is to minimize the sensor noise effect. For the $i$-th mobile sensor, its observation is assumed as  follows:
+    \begin{equation*}\label{e:obsv}
+        z_i(t) = u(\mathbf{x}_i(t),t) + \epsilon(\mathbf{x}_i(t),t),
+    \end{equation*}
+where $\epsilon$ is white   noise with statistics
+$$E\{ \epsilon(x,y,t) \} = 0, $$
+$$E\{\epsilon(x,y,t) \epsilon(x^\ast,y^\ast,t^\ast)\} = \sigma^2\delta(x - x^\ast) \delta(y -y^\ast)\delta(t-t^\ast).$$
+The positions are in the domain of the diffusion process, i.e. $(x,y) \in \Omega$ and $(x^\ast,y^\ast) \in \Omega$.
+    The $\delta$ is  Dirac's delta function, and $\sigma$ is a positive constant.
+
+
+    The objective function  is chosen to be the so-called D-optimum design criterion defined on the Fisher Information Matrix (FIM), which is defined as the follows:
+
+\begin{mdef}[Fisher Information Matrix]\label{d:fisher}
+If a measurable random variable $X$ depends on parameter $\theta$, and the likelihood function is $l(\theta;X)$.
+Then the Fisher information is
+\begin{equation*}
+    \mathcal{I}=E\{[\frac{\partial}{\partial \theta} \log l(\theta;X)]^2 \}
+\end{equation*}
+The matrix form is Fisher information matrix, which is $M$, with the $i,j$th entry defined as:
+\begin{equation}\label{e:FIM}
+    M_{(i,j)}=E\{\frac{\partial}{\partial \theta_i} \log l(\theta;X) \frac{\partial}{\partial \theta_j} \log l(\theta;X) \}
+\end{equation}
+\end{mdef}
+\begin{remark}
+An important application of FIM is to estimate the estimation error bound by the Cram\'{e}r-Rao bound. The details are presented in Appendix~\ref{s:fi}.
+\end{remark}
+
+     Up to a constant multiplier, the FIM constitutes the inverse of the covariance matrix for the least-squares estimator defined as the minimizer of the following  ``fit-to-data'' criterion:
+    \begin{equation}\label{e:fitdata}
+    J_1(c) = \frac{1}{2} \int_T \| z(t) - \hat u(\mathbf{x},t;c)\|^2 \dt.
+    \end{equation}
+    The notation $\hat \;$ in (\ref{e:fitdata}) indicates the predicted value.
+%The symbol $\| \mathbf{a} \|^2_{Q^{-1}(t)}$ is defined as
+%    $$\| \mathbf{a} \|^2_{Q^{-1}(t)} = \mathbf{a}^T Q^{-1} \mathbf{a}, \forall \mathbf{a}\in \mathbb{R}^N.$$
+For $n$ robots, $J_1(c)$ becomes
+    \begin{equation*}\label{e:fitdataN}
+    J_1(c) = \sum_{j=1}^n \frac{1}{2} \int_T \| z_j(t) - \hat u_j(\mathbf{x},t;c)\|^2 \dt.
+    \end{equation*}
+Then, the FIM of $n$ robots is defined as the follows:
+    \begin{equation}\label{e:mTraj}
+        M= \sum_{j=1}^n \int_0^{t_f}
+        \left( \frac{\partial u(\mathbf{x}_j(t), t)}{\partial \mathbf{c}} \right)^T
+        \left( \frac{\partial u(\mathbf{x}_j(t), t)}{\partial \mathbf{c}} \right) \dt,
+    \end{equation}
+    where
+    $$\mathbf{c}=\left(
+                   \begin{array}{c}
+                     c_1 \\
+                     c_2 \\
+                     c_3 \\
+                   \end{array}
+                 \right)
+     .$$
+    The derivation from (\ref{e:FIM}) to (\ref{e:mTraj}) is presented in Appendix~\ref{s:fi}.
+    Note that  $\mathbf{x}_j$ is the state vector of the $j$-th robot. The Here $\mathbf{c}$ is the parameter vector in the DPS to be identified, and the partial derivatives are evaluated at $\mathbf{c} = \mathbf{c}_0$, a preliminary estimate of $\mathbf{c}$.
+
+%Imagine that the $u$ is a 3D surface, then the FIM matrix contains the gradient information of the surface. There are many gradient-based optimization algorithms that can find the local maximum of the surface.
+Note that the FIM, $M$, is a matrix. Thus, there are many metrics that can be defined to indicate the volume of the matrix.   The D-optimality criterion used in this paper is defined as
+\begin{equation*}\label{e:dopt}
+\Psi(M) = -\ln \det(M).
+\end{equation*}
+Other optimality criteria are applicable but not discuss in this chapter. The comparisons among different criteria are presented in Chapter~\ref{s:COSS}.
+
+
+    The objective function for the MAS-net estimation problem is to minimize $J_2(\mathbf{x}) =\Psi(M).$ Our goal here is to find the optimal control function $\mathbf{\tau}\in L_{\infty}^{2n}[t_0,t_f]$ for $n$ two wheel differentially-driven mobile sensors together with  the initial states $\mathbf{x}(t_0) = \mathbf{\xi} \in \mathbb{R}^K$ where $K=6n$ and $t\in [t_0, t_f]=[0,1]$, such that $J_2(\mathbf{x})$ is minimized.
+
+\subsection{Problem Reformulation in the Optimal Control Framework}~\label{s:optc}
+%    Since the MAS-net estimation problem is solved by a Matlab toolbox called RIOTS, here we reformulate the problem in with the formate in~\cite{chenriots95}. The notations are modified to accommodate this paper.
+According to the general   optimal control problem formulation in RIOTS~\cite{chenriots95}, our optimal mobile sensor motion scheduling problem can be formulated as follows:
+\begin{equation}\label{e:ocp}
+   \min_{(\mathbf{\tau}, \mathbf{\xi}) \in L_{\infty}^{2n}[t_0,t_f]\times \mathbb{R}^K}
+   J(\mathbf{\tau}, \mathbf{\xi})
+\end{equation}
+ where
+ $$        J(\mathbf{\tau}, \mathbf{\xi})=g_0(\xi, \mathbf{x}(t_f))
+ +  \int_{t_0}^{t_f} l_o(t, \mathbf{x}, \mathbf{\tau}) \dt $$
+subject to the following conditions and constraints:
+\begin{eqnarray*}
+ && \mathbf{\dot x} = h(t,\mathbf{x},\mathbf{\tau}), \\
+ &&  \mathbf{x}(t_0) = \mathbf{\xi}, \quad t\in [t_0, t_f], \\
+ &&  \mathbf{\tau}_{j,\min}(t) \leq \mathbf{\tau}_{j}(t) \leq  \mathbf{\tau}_{j,\max}(t), \; j=1,\cdots,n, t\in [t_0, t_f], \\
+%
+ &&   \mathbf{\xi}_{j,\min}(t) \leq \mathbf{\xi}_{j}(t) \leq  \mathbf{\xi}_{j,\max}(t), \; j=1,\cdots,k, t\in [t_0, t_f],\\
+%
+ &&  l_{ti}(t,\mathbf{x}(t), \mathbf{\tau}(t) ) \leq 0, \quad t\in [t_0, t_f], \\
+ &&  g_{ei}(\mathbf{\xi}, \mathbf{x}(t_f)) \leq 0, \quad
+    g_{ee}(\mathbf{\xi}, \mathbf{x}(t_f)) = 0. \\
+ \end{eqnarray*}
+ For our optimal motion scheduling problem,
+ $ \mathbf{\dot x}=h(t,\mathbf{x},\mathbf{\tau})=A \mathbf{x} + B \mathbf{\tau}$
+for the single robot case  and for three robot cases
+$\mathbf{\dot x}_T=h(t,\mathbf{x}_T,\mathbf{\tau}_T)=A_T \mathbf{x}_T + B_T \mathbf{\tau}_T.$
+Here, we define
+     $l_0(\xi, \mathbf{x}(t_f))=0 $
+and
+     $g_0(\xi, \mathbf{x}(t_f))=\Psi(M)$
+to simplify the numerical computation.
+This technique is called solving an ``equivalent Mayer problem.''
+    To understand the equivalent Mayer problem, let us start from the definition of some new notation.
+    $g(\mathbf{x}_{i})$ is called the sensitivity function, where
+    $$g(\mathbf{x}_i,t) := \left(\frac{\partial u(\mathbf{x}_i,t)}{\partial \mathbf{c}}\right)^T. $$
+Then, the FIM in (\ref{e:mTraj}) is
+    \begin{equation} \label{e:M2}
+        M=\sum_{j=1}^n \int_{t_0}^{t_f} g(\mathbf{x}_j(t),t) g^T(\mathbf{x}_j(t),t) \dt .
+    \end{equation}
+   Define the Mayer states as
+    \begin{equation}\label{e:mayerstate}
+        \chi_{(i,j)}(t) := \int_{t_0}^{t}  \varpi_{(i,j)}(\tau) {\rm d}\tau.
+    \end{equation}
+    where
+    \begin{equation*}
+        \varpi_{(i,j)}(t) := \sum_{l=1}^n  g_{(i)}(\mathbf{x}_l(t),t) g_{(j)}(\mathbf{x}_l(t),t).
+    \end{equation*}
+Denote $\chi_{\hbox{dl}}$  the stack vector which stacks all the entries on the diagonal and below the diagonal of $\chi$ to a vector. For example, if $\chi$ is a 2 by 2 matrix,
+$$\chi_{\hbox{dl}}= \left(
+                      \begin{array}{c}
+                        \chi_{(1,1)} \\
+                        \chi_{(2,1)} \\
+                        \chi_{(2,2)} \\
+                      \end{array}
+                    \right)
+.$$
+Then,  the extended Mayer state vector $\mathbf{\tilde x}$ can be expressed as
+    $$\mathbf{\tilde x} :=
+    \begin{bmatrix}
+        \mathbf{x} \\
+        \chi_{\hbox{dl}}
+    \end{bmatrix}. $$
+    Comparing (\ref{e:mayerstate}) and (\ref{e:M2}), one can easily observe  the key point of this equivalent Mayer problem. That is, $\chi(t_f)=M$  and $\chi_{\hbox{dl}}$ contains all the information of $M$  since $M$ is symmetric. After replacing the extended state vector $\mathbf{x}$ with the extended Mayer vector $\mathbf{\tilde x}$, we can get $M$ without explicit integration.
+
+    Thus, when considering the equivalent Mayer problem, the models used for RIOTS are as follows:
+\begin{eqnarray*}
+% \nonumber to remove numbering (before each equation)
+  \dot{\tilde{\mathbf{x}}} &=&
+    \begin{bmatrix}
+    A \mathbf{x} + B \tau \\
+    \varpi_{\hbox{dl}}
+    \end{bmatrix}, \\
+%
+   \dot{\tilde{\mathbf{x}}}_T &=&
+    \begin{bmatrix}
+    A_T \mathbf{x} + B_T \tau_T \\
+    \varpi_{\hbox{dl}}
+    \end{bmatrix}.
+\end{eqnarray*}
+
+
+
+
+\section{Finding A Numerical Solution of the Optimal Mobile Sensor Motion Scheduling Problem}~\label{s:sol}
+\subsection{A Brief Introduction to RIOTS}~\label{s:riots}
+    RIOTS stands for ``recursive integration optimal trajectory solver.'' It is a Matlab toolbox designed to solve a very broad class of optimal control problems as defined in (\ref{e:ocp}). When executing under Matlab script mode,
+the following configuration files need to be provided: {\tt sys\_l.m, sys\_h.m, sys\_g.m, sys\_init.m, sys\_acti.m}. They are the $l_o$, $h$, $g_o$ functions in (\ref{e:ocp}) and two initial conditions, respectively. Detailed instructions on how to prepare these files and many sample problems can be found in \cite{chenriots95}.     The most important function in this optimal control toolbox   is {\tt riots}  explained in detail in~\cite[p.73]{ChenRIOTS}.
+    \begin{verbatim}
+[u,x,f,g,lambda2] = riots([x0,{fixed,{x0min,x0max}}],u0,t,Umin,Umax,
+           params,[miter,{var,{fd}}],ialg,{[eps,epsneq,objrep,bigbnd]},
+                                          {scaling},{disp},{lambda1}).
+    \end{verbatim}
+
+The parameters useful for understanding our numerical experiments here are as the follows:
+\begin{itemize}
+    \item {\tt x0}: initial values of $\mathbf{\tilde x}$.
+    \item {\tt fixed}: a vector to specify which entries in {\tt x0} are fixed and which entries are not. Later in Section~\ref{s:exp}, results for two   configurations are presented by changing {\tt fixed} which are    cases of ``fixed initial states'' and ``unfixed initial states'', respectively. For the first case, the robots' initial conditions, $\mathbf{x}_0$, are fixed. For the second case, $\mathbf{\chi_{dl}}$ is fixed so that the robots start from the optimal starting positions.
+    \item {\tt x0min}, {\tt x0man}: bounds of the initial conditions.
+    \item {\tt u0}: initial values of the control functions $\mathbf{\tau}$.
+    \item {\tt t}: time.
+    \item {\tt Umin}, {\tt Umax}: bounds for $\mathbf{\tau}$.
+\end{itemize}
+The definitions of other parameters are described in~\cite{ChenRIOTS}.
+
+\subsection{Using Matlab PDE Toolbox Together with RIOTS}~\label{s:together}
+The sensitivity function is generated before the function call of {\tt riots} by Matlab PDE Toolbox. The procedure of solving the sensitivity function amounts to finding the solutions of the followings equations:
+    $$\left\{%
+\begin{array}{ll}
+   \displaystyle \frac{\partial u}{\partial t}=\nabla \cdot (\kappa \nabla u) + 20\exp(-50(x_1-t)^2), \\
+   \displaystyle  \frac{\partial g_{(1)}}{\partial t}=\nabla \cdot \nabla u + \nabla \cdot (\kappa \nabla g_{(1)}), \\
+    \displaystyle \frac{\partial g_{(2)}}{\partial t}=\nabla \cdot (x \nabla u) + \nabla \cdot (\kappa \nabla g_{(2)}), \\
+    \displaystyle  \frac{\partial g_{(3)}}{\partial t}=\nabla \cdot (y \nabla u) + \nabla \cdot (\kappa \nabla g_{(3)}), \\
+\end{array}\right.     $$
+ where  $\nabla= (\partial/\partial x, \partial/\partial y)$.  Note that there are three $g$ functions  since there are 3 parameters $c_1, c_2, c_3$ in Section~\ref{s:mod}.
+
+
+
+\section{Illustrative Simulations}~\label{s:exp}
+%In this section, we presents some simulation results with comparisons.
+
+%   {\bf\large More results and discussions will be included in the final version. The figures will also be improved in that version.}
+\subsection{Differential Drive vs. Omni-Directional Drive}~\label{s:DDvsOD}
+    In~\cite{UcinskiOptDPS05}, the robot model is a simple kinematic model:
+\begin{equation}\label{e:kine}
+    \begin{bmatrix}
+    \dot x(t) \\
+    \dot y(t) \\
+    \end{bmatrix}
+    =
+    r\mathbf{\omega}(t), \;
+%
+    \begin{bmatrix}
+    x(0) \\
+    y(0) \\
+    \end{bmatrix}
+    =
+    \begin{bmatrix}
+    x_0 \\
+    y_0 \\
+    \end{bmatrix},
+\end{equation}
+where $\omega(t)$ is the angular speed vector, and $r$ is the radii of the wheels.
+%Comparing (\ref{e:kine}) with (\ref{e:newton}) and (\ref{e:newtonm}), one can easily understand that
+Obviously, (\ref{e:kine}) is an approximation.
+% to (\ref{e:newtonm}). Since (\ref{e:newton}) implies that the speed cannot jump~\footnote{Theoretically the speed may jump if control energy is infinite, but this is never true for engineering applications.}, $\mathbf{\omega}(t)$ has a limitation and should not be considered as a  control signal, which must be able to change arbitrarily according to the requirements.
+    In this paper, we refer a robot that subjects to the kinematic in (\ref{e:kine}) a  proximal ``omni-directionally-driven robot'' since the velocity can be set arbitrarily. When the robot is differentially driven, we are interested  to see the difference in the optimal sensor motion scheduling.
+% Although real-world omnidirectional-drive robots still subject to (\ref{e:newtonm}), they are closer to (\ref{e:kine}), compared with differential-drive robots. The later ones have the dynamic model of (\ref{e:ddmodel}).
+    The following four cases are compared first:
+    \begin{itemize}
+        \item case 1: Omni-directionally-driven robots starting from a fixed initial state vector.
+        \item case 2: Differentially-driven robots with a fixed given initial state vector. Moreover, we consider two subcases. Subcase(2a) has an initial yaw angle of 15$^\circ$ and   subcase(2b) of  -15$^\circ$.
+        \item case 3: Omni-directionally-driven robots without a fixed initial state vector. We assume that the optimal static sensor location problem is solved first. Use this  obtained optimal position  as the initial states and seek the optimal sensor motion trajectories.
+        \item case 4: The same as in case 3 but using differentially-driven mobile robots.
+       \end{itemize}
+According to the above definitions, Fig.~\ref{fig:ucfix} shows the results for case 1; Fig.~\ref{fig:thrrob4d} for case 2(a); Fig.~\ref{fig:thrrob3d} for case 2(b); Fig.~\ref{fig:ucunfix} for case 3; and Fig.~\ref{fig:thrrob5d} for case 4. From these figures, we have the following observations:
+\begin{itemize}
+    \item Differentially-driven robots are less likely to change the orientation. The optimal mobile sensor trajectories in cases 2 and 4 have smaller curvatures compared with that in cases 1 and 3.
+    \item No matter what the robot dynamics are, the robots tend to move along the same trend. This can be observed by comparing cases 1, 2(a), 2(b) and cases 3, 4.
+    \item For multi-robot cases, the final positions of the robots tend to be evenly distributed. Comparison on Fig.~\ref{fig:thrrob4d} and Fig.~\ref{fig:thrrob3d} is especially interesting. The two figures support each other, as the trend of the trajectories align along with each other.
+   \end{itemize}
+
+\begin{figure}
+    \centering
+  % Requires \usepackage{graphicx}
+  \includegraphics[width=0.7\textwidth]{img/ucfixtraj}\\
+  \caption{The optimal sensor trajectories of omni-directionally-driven robots (case 1).}\label{fig:ucfix}
+\end{figure}
+
+\begin{figure}
+    \centering
+  % Requires \usepackage{graphicx}
+  \includegraphics[width=0.7\textwidth]{img/ThrRob4d}\\
+  \caption{The optimal sensor trajectories of differentially-driven robots: 15$^\circ$ initial yaw angle  (case 2a).}\label{fig:thrrob4d}
+\end{figure}
+
+
+\begin{figure}
+    \centering
+  % Requires \usepackage{graphicx}
+  \includegraphics[width=0.7\textwidth]{img/ThrRob3d}\\
+  \caption{The optimal sensor trajectories of differentially-driven robots: -15$^\circ$ initial yaw angle  (case 2b).}\label{fig:thrrob3d}
+\end{figure}
+
+
+\begin{figure}
+    \centering
+  % Requires \usepackage{graphicx}
+  \includegraphics[width=0.7\textwidth]{img/ucunfixtraj}\\
+  \caption{The optimal sensor trajectories of omni-directionally-driven robots using optimal initial conditions  (case 3).}\label{fig:ucunfix}
+\end{figure}
+
+
+\begin{figure}
+    \centering
+  % Requires \usepackage{graphicx}
+  \includegraphics[width=0.7\textwidth]{img/ThrRob5d}\\
+  \caption{The optimal sensor trajectories of differentially-driven robots  using   optimal initial conditions (case 4).  }\label{fig:thrrob5d}
+\end{figure}
+
+
+
+\subsection{Comparison of Robots with Different Capabilities}~\label{s:per}
+%    Continue on the discussions in Sec.~\ref{s:DDvsOD}, there are more cases:
+Here we consider two more cases to see .
+    \begin{itemize}
+        \item case 5: using a single ``weak'' robot, whose weight is 0.5 and the range of its torque for each wheel is $\pm10$.
+        \item case 6: using a single ``strong'' robot, whose weight is 0.05 and the range of its torque for each wheel is $\pm100$.
+       \end{itemize}
+    With the same fixed initial states and the same time interval, the robot in case 5 moves shorter than in case 6, as seen from    Fig.~\ref{fig:onerob1} and Fig.~\ref{fig:onerob4}. This matches our intuition that it is desirable for the sensors to measure the DPS states at more spatial locations whenever possible.
+
+\begin{figure}
+  \centering
+  % Requires \usepackage{graphicx}
+  \includegraphics[width=0.7\textwidth]{img/onerob1}\\
+  \caption{The optimal trajectory of weak differential-drive robots.}\label{fig:onerob1}
+\end{figure}
+
+\begin{figure}
+   \centering
+  % Requires \usepackage{graphicx}
+  \includegraphics[width=0.7\textwidth]{img/onerob4}\\
+  \caption{The optimal trajectory of strong differential-drive robots: initial yaw angle is 15$^\circ$.}\label{fig:onerob4}
+\end{figure}
+
+
+\subsection{On the Effect of the  Initial Orientation}~\label{s:ori}
+    In additional to case 2(a) and case 2(b), the effects of different initial yaw angle is studies in this section.
+    The robots associated with each figure in this subsection have the same mechanic configurations and the same initial conditions.
+
+  Let us  compare the following figures:
+    \begin{itemize}
+        \item Figure~\ref{fig:thrrob4d}: three robots with 15$^\circ$ initial yaw angle.
+        \item Figure~\ref{fig:thrrob3d}: three robots with -15$^\circ$ initial yaw angle.
+        \item Figure~\ref{fig:onerob4}: one robots with 15$^\circ$ initial yaw angle.
+        \item Figure~\ref{fig:onerob5}: one robots with -15$^\circ$ initial yaw angle.
+       \end{itemize}
+The initial yaw angle affects the curvature of the optimal trajectory, but does not change the trend of the optimal trajectory. This indicates that the initial yaw angle matters, but not critical. Figures~\ref{fig:onerob4} and \ref{fig:onerob5} support the above statement. With different initial yaw angles, the two robots starting at the same position have different trajectories, but their final positions are close. For multi-robot cases, the {\it formation} pattern of the robots' tends to be similar. 
+
+
+\begin{figure}[h!]
+    \centering
+  % Requires \usepackage{graphicx}
+  \includegraphics[width=0.7\textwidth]{img/onerob5}\\
+  \caption{The optimal trajectory of strong differential-drive robots: initial yaw angle   -15$^\circ$.}\label{fig:onerob5}
+\end{figure}
+
+%\subsection{Comments}~\label{s:com}
+
+\section{Chapter Summary}~\label{s:con}
+    This chapter presents a numerical procedure for optimal sensor-motion scheduling of diffusion systems.  Given a DPS with nominal parameters, differentially-driven mobile robots move along their optimal trajectories such that the  sensor noise effect on the estimation  of system parameters  is minimized. This optimal measurement problem is an important module for a potential closed-loop DPS parameter identification algorithm.     This chapter reformulates a differential-driven robot's dynamics model in the framework of optimal control. By the combined use of two existing Matlab toolboxes for  optimal control (RIOTS) and partial differential equations (Matlab PDE Toolbox),    the optimal sensor-motion scheduling problem can be solved numerically. Simulation results and their observations are presented.
+
